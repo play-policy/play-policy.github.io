@@ -1,0 +1,13 @@
+{
+  "_about": "Read by eye from the HUD of the first and last frame of each hardware clip. start_deg = 'X deg at start', end_deg = final 'Y deg to goal', hud_end_s = where the HUD time axis trace ends. The green dashed HUD line is the 0.4 rad (22.9 deg) threshold.",
+  "real_01": {"run_id": "run_20260911_231047_goal01", "start_deg": 155, "end_deg": 22, "hud_end_s": 56,
+              "speed_note": "Not real time throughout: the first ~15 s of the clip cover ~26 s on the HUD clock (about 1.75x); after that it runs at real time. Overall the 45.8 s clip covers ~56 s, so a playbackRate badge understates the true speed-up."},
+  "real_02": {"run_id": "run_20260911_232320_goal02", "start_deg": 129, "end_deg": 22, "hud_end_s": 35.5,
+              "speed_note": "Real time. Opens with ~7.5 s of a person placing the cube in the hand before the policy starts (poster taken at 10 s)."},
+  "real_03": {"run_id": "run_20260911_203732_goal05", "start_deg": 136, "end_deg": 20, "hud_end_s": 53, "speed_note": "Real time."},
+  "real_04": {"run_id": "run_20260911_231047_goal02", "start_deg": 118, "end_deg": 10, "hud_end_s": 35.5, "speed_note": "Real time."},
+  "real_05": {"run_id": "run_20260913_004849_goal03", "start_deg": 97, "end_deg": 22, "hud_end_s": 25, "speed_note": "Real time."},
+  "real_06": {"run_id": "run_20260911_232320_goal05", "start_deg": 139, "end_deg": 20, "hud_end_s": 26, "speed_note": "Real time."},
+  "real_07": {"run_id": "run_20260913_004849_goal09", "start_deg": 141, "end_deg": 17, "hud_end_s": 17.9, "speed_note": "Real time."},
+  "real_08": {"run_id": "run_20260911_203732_goal04", "start_deg": 162, "end_deg": 21, "hud_end_s": 48, "speed_note": "Real time."}
+}

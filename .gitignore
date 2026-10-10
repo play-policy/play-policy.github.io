@@ -1,0 +1,9 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+
+# The source presentation is 328 MB and exceeds GitHub's normal per-file limit.
+DSP-deck (1).pptx
+
+# Draft paper under review (anonymous, unfinished conclusion). Link the arXiv version instead.
+Robot_Play*.pdf

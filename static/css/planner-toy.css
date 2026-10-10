@@ -1,0 +1,332 @@
+/* planner-toy.css: styles for the in-browser planning toy (static/js/planner-toy.js).
+   Everything is scoped under .ptoy. Colors read the page tokens (--ink, --ink-2, --muted, --line,
+   --page, --band, --dsp, --prop, --mono) and fall back to the same values when they are missing. */
+
+.ptoy {
+  --ptoy-ink: var(--ink, #16181a);
+  --ptoy-secondary: var(--ink-2, #50555b);
+  --ptoy-muted: var(--muted, #6c7278);
+  --ptoy-hairline: var(--line, #e3e5e8);
+  --ptoy-band: var(--band, #f3f4f5);
+  --ptoy-page: var(--page, #ffffff);
+  --ptoy-accent: var(--dsp, #0072b2);
+  --ptoy-proposal: var(--prop, #e69f00);
+  --ptoy-play: var(--muted-2, #9aa0a6);
+  --ptoy-thresh: #b9bfc5;
+  --ptoy-control: #c6cbd0;
+  --ptoy-mono: var(--mono, "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+
+  container-type: inline-size;
+  display: block;
+  color: var(--ptoy-ink);
+  background: var(--ptoy-page);
+  border: 1px solid var(--ptoy-hairline);
+  border-radius: 6px;
+  padding: 16px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.ptoy *,
+.ptoy *::before,
+.ptoy *::after {
+  box-sizing: border-box;
+}
+
+/* ---- canvases */
+
+.ptoy__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+
+.ptoy__view,
+.ptoy__plotwrap {
+  min-width: 0;
+  margin: 0;
+}
+
+.ptoy__cube,
+.ptoy__plot {
+  display: block;
+  width: 100%;
+}
+
+.ptoy__cube {
+  height: 250px;
+  background: var(--ptoy-band);
+  border-radius: 6px;
+}
+
+.ptoy__plot {
+  height: 230px;
+}
+
+@container (min-width: 640px) {
+  .ptoy__stage {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 20px;
+  }
+  .ptoy__cube,
+  .ptoy__plot {
+    height: 300px;
+  }
+}
+
+/* ---- compact legend under the plot, only when the plot is too narrow for labels at the line ends */
+
+.ptoy__legend {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: none;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-size: 13px;
+  color: var(--ptoy-secondary);
+}
+
+.ptoy--narrow .ptoy__legend {
+  display: flex;
+}
+
+.ptoy__legend li {
+  display: inline-flex;
+  align-items: center;
+}
+
+.ptoy__legend li[hidden] {
+  display: none;
+}
+
+.ptoy__key {
+  display: inline-block;
+  width: 18px;
+  height: 0;
+  margin-right: 6px;
+  border-top: 2px solid var(--ptoy-ink);
+}
+
+.ptoy__key--prop {
+  border-top-color: var(--ptoy-proposal);
+  opacity: 0.6;
+}
+
+.ptoy__key--sel {
+  border-top-color: var(--ptoy-accent);
+}
+
+.ptoy__key--plan {
+  border-top: 3px solid var(--ptoy-accent);
+}
+
+.ptoy__key--cmp {
+  border-top: 3px solid var(--ptoy-play);
+}
+
+/* ---- controls */
+
+.ptoy__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 24px;
+  margin-top: 16px;
+}
+
+.ptoy__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ptoy__label {
+  font-size: 13px;
+  color: var(--ptoy-secondary);
+}
+
+.ptoy__seg {
+  display: inline-flex;
+}
+
+.ptoy__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ptoy button {
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--ptoy-ink);
+  background: var(--ptoy-page);
+  border: 1px solid var(--ptoy-control);
+  border-radius: 4px;
+  padding: 7px 11px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ptoy button:hover {
+  background: var(--ptoy-band);
+}
+
+.ptoy button:focus-visible {
+  outline: 2px solid var(--ptoy-accent);
+  outline-offset: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+.ptoy button:disabled {
+  cursor: progress;
+  color: var(--ptoy-secondary);
+}
+
+.ptoy__seg button {
+  border-radius: 0;
+  margin-left: -1px;
+}
+
+.ptoy__seg button:first-child {
+  margin-left: 0;
+  border-radius: 4px 0 0 4px;
+}
+
+.ptoy__seg button:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.ptoy__seg button[aria-pressed="true"],
+.ptoy__actions button[aria-pressed="true"] {
+  background: var(--ptoy-ink);
+  border-color: var(--ptoy-ink);
+  color: var(--ptoy-page);
+  position: relative;
+}
+
+/* ---- readout and status */
+
+.ptoy__readout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  margin: 14px 0 0;
+  font-size: 13px;
+}
+
+.ptoy__readout div {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+}
+
+.ptoy__readout dt {
+  color: var(--ptoy-secondary);
+}
+
+.ptoy__readout dd {
+  margin: 0;
+  font-family: var(--ptoy-mono);
+  font-variant-numeric: tabular-nums;
+  min-width: 4.5em;
+}
+
+.ptoy__status {
+  margin: 8px 0 0;
+  min-height: 1.45em;
+  font-size: 14px;
+  color: var(--ptoy-ink);
+}
+
+/* ---- results of headless trials */
+
+.ptoy__tablewrap {
+  overflow-x: auto;
+  margin-top: 6px;
+}
+
+.ptoy__results table {
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.ptoy__caption {
+  margin: 12px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ptoy-ink);
+}
+
+.ptoy__subcaption {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--ptoy-secondary);
+}
+
+.ptoy__results th,
+.ptoy__results td {
+  padding: 5px 14px 5px 0;
+  text-align: left;
+  border-bottom: 1px solid var(--ptoy-hairline);
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.ptoy__results td:last-child,
+.ptoy__results th:last-child {
+  padding-right: 0;
+}
+
+.ptoy__results thead th {
+  color: var(--ptoy-secondary);
+  vertical-align: bottom;
+}
+
+.ptoy__results .ptoy__num {
+  text-align: right;
+  font-family: var(--ptoy-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.ptoy__results thead .ptoy__num {
+  font-family: inherit;
+}
+
+.ptoy__note {
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: var(--ptoy-secondary);
+  max-width: 72ch;
+}
+
+@media (forced-colors: active) {
+  .ptoy__seg button[aria-pressed="true"] {
+    outline: 2px solid ButtonText;
+  }
+}
+
+/* narrow: let headers and row labels wrap so the table fits instead of clipping */
+@container (max-width: 460px) {
+  .ptoy__results table {
+    width: 100%;
+  }
+  .ptoy__results th,
+  .ptoy__results td {
+    padding-right: 6px;
+    font-size: 12px;
+  }
+  .ptoy__results thead th,
+  .ptoy__results tbody th {
+    white-space: normal;
+  }
+  .ptoy__results thead th:nth-child(5) {
+    min-width: 4.2em;
+  }
+}
+
+.ptoy__readout div[hidden] {
+  display: none;
+}

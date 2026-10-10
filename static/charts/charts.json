@@ -1,0 +1,552 @@
+{
+  "font": "IBM Plex Sans",
+  "charts": [
+    {
+      "name": "sim_baselines",
+      "width": 1600,
+      "height": 900,
+      "aspect": "16:9",
+      "duration_s": 3.4,
+      "frames": 102,
+      "video": "static/charts/sim_baselines.mp4",
+      "poster": "static/charts/sim_baselines.jpg",
+      "columns": [
+        "Method",
+        "0.4 rad (22.9°)",
+        "0.6 rad (34.4°)",
+        "0.8 rad (45.8°)"
+      ],
+      "rows": [
+        [
+          "DSP (ours)",
+          72.7,
+          91.4,
+          96.1
+        ],
+        [
+          "Distilled policy (ours)",
+          40.6,
+          72.7,
+          86.7
+        ],
+        [
+          "Hindsight BC",
+          25.8,
+          53.9,
+          71.9
+        ],
+        [
+          "Play policy",
+          15.6,
+          36.7,
+          54.7
+        ],
+        [
+          "Goal-conditioned BC",
+          21.9,
+          34.4,
+          50.0
+        ],
+        [
+          "PPO, same 701K frames",
+          0.0,
+          0.0,
+          1.6
+        ]
+      ],
+      "decimals": [
+        null,
+        1,
+        1,
+        1
+      ],
+      "unit": "Success rate (%) at each goal threshold",
+      "notes": "Simulated in-hand reorientation (Isaac Lab), 128 seeded trials, start-goal error over 90°. Hindsight BC and PPO use the same 701K interaction frames as DSP; goal-conditioned BC uses 15 min of goal-directed teleoperation.",
+      "mobile": {
+        "width": 1080,
+        "height": 1640,
+        "aspect": "27:41",
+        "duration_s": 3.4,
+        "frames": 102,
+        "video": "static/charts/sim_baselines_m.mp4",
+        "poster": "static/charts/sim_baselines_m.jpg"
+      }
+    },
+    {
+      "name": "sim_efficiency",
+      "width": 1600,
+      "height": 900,
+      "aspect": "16:9",
+      "duration_s": 4.2,
+      "frames": 126,
+      "video": "static/charts/sim_efficiency.mp4",
+      "poster": "static/charts/sim_efficiency.jpg",
+      "columns": [
+        "Method",
+        "Interaction frames",
+        "Success at 0.6 rad (%)"
+      ],
+      "decimals": [
+        null,
+        0,
+        1
+      ],
+      "unit": "Interaction frames used for training, success rate (%)",
+      "rows": [
+        [
+          "DSP",
+          701000,
+          91.4
+        ],
+        [
+          "Hindsight BC",
+          701000,
+          53.9
+        ],
+        [
+          "PPO, same frames",
+          701000,
+          0.0
+        ],
+        [
+          "PPO, 344M frames",
+          344000000,
+          86.7
+        ],
+        [
+          "PPO, unlimited frames",
+          null,
+          96.9
+        ]
+      ],
+      "notes": "344M / 701K ≈ 490. PPO with unlimited frames is an upper bound drawn as a reference line (no frame count; null in the frames column).",
+      "mobile": {
+        "width": 1080,
+        "height": 1240,
+        "aspect": "27:31",
+        "duration_s": 4.2,
+        "frames": 126,
+        "video": "static/charts/sim_efficiency_m.mp4",
+        "poster": "static/charts/sim_efficiency_m.jpg"
+      }
+    },
+    {
+      "name": "real_vs_sim",
+      "width": 1600,
+      "height": 900,
+      "aspect": "16:9",
+      "duration_s": 3.6,
+      "frames": 108,
+      "video": "static/charts/real_vs_sim.mp4",
+      "poster": "static/charts/real_vs_sim.jpg",
+      "columns": [
+        "Controller",
+        "0.4 rad (22.9°)",
+        "0.6 rad (34.4°)",
+        "0.8 rad (45.8°)"
+      ],
+      "rows": [
+        [
+          "DSP on hardware",
+          68.6,
+          90.0,
+          97.1
+        ],
+        [
+          "Play policy",
+          20.9,
+          38.3,
+          54.1
+        ],
+        [
+          "Cube random walk, SO(3)",
+          6.3,
+          11.4,
+          17.5
+        ],
+        [
+          "Joint random walk",
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          "DSP in simulation (reference)",
+          72.7,
+          91.4,
+          96.1
+        ]
+      ],
+      "decimals": [
+        null,
+        1,
+        1,
+        1
+      ],
+      "unit": "Success rate (%) at each goal threshold",
+      "notes": "Sharpa hand on a Tianji Marvin M6 arm, 120 s per trial. The cube random walk on SO(3) matches the play policy's angular speed. Hardware DSP stays within 4.1 points of simulation.",
+      "mobile": {
+        "width": 1080,
+        "height": 1420,
+        "aspect": "54:71",
+        "duration_s": 3.6,
+        "frames": 108,
+        "video": "static/charts/real_vs_sim_m.mp4",
+        "poster": "static/charts/real_vs_sim_m.jpg"
+      }
+    },
+    {
+      "name": "pusht",
+      "width": 1600,
+      "height": 900,
+      "aspect": "16:9",
+      "duration_s": 3.4,
+      "frames": 102,
+      "video": "static/charts/pusht.mp4",
+      "poster": "static/charts/pusht.jpg",
+      "columns": [
+        "Controller",
+        "Overlap ≥ 0.90",
+        "Overlap ≥ 0.95",
+        "Mean coverage"
+      ],
+      "rows": [
+        [
+          "DSP (ours)",
+          98,
+          74,
+          0.953
+        ],
+        [
+          "Hindsight BC",
+          74,
+          36,
+          0.764
+        ],
+        [
+          "Behavior cloning",
+          64,
+          28,
+          0.751
+        ],
+        [
+          "Goal-conditioned BC",
+          60,
+          34,
+          0.733
+        ],
+        [
+          "RL, matched data",
+          0,
+          0,
+          0.155
+        ]
+      ],
+      "decimals": [
+        null,
+        0,
+        0,
+        3
+      ],
+      "unit": "Success rate (%) at each overlap threshold; coverage is mean mask overlap (0 to 1)",
+      "notes": "Push-T with a fixed 10k-frame teleoperation budget. Success means the T-block mask overlaps the target by at least the threshold.",
+      "mobile": {
+        "width": 1080,
+        "height": 1140,
+        "aspect": "18:19",
+        "duration_s": 3.4,
+        "frames": 102,
+        "video": "static/charts/pusht_m.mp4",
+        "poster": "static/charts/pusht_m.jpg"
+      }
+    },
+    {
+      "name": "rgb",
+      "width": 1600,
+      "height": 900,
+      "aspect": "16:9",
+      "duration_s": 3.8,
+      "frames": 114,
+      "video": "static/charts/rgb.mp4",
+      "poster": "static/charts/rgb.jpg",
+      "columns": [
+        "Controller",
+        "0.4 rad (22.9°)",
+        "0.6 rad (34.4°)",
+        "0.8 rad (45.8°)"
+      ],
+      "decimals": [
+        null,
+        1,
+        1,
+        1
+      ],
+      "unit": "Success rate (%) at each goal threshold",
+      "rows": [
+        [
+          "Play policy alone (RGB)",
+          34.4,
+          53.1,
+          76.6
+        ],
+        [
+          "DSP (RGB)",
+          56.2,
+          78.1,
+          89.1
+        ],
+        [
+          "Gain (percentage points)",
+          21.8,
+          25.0,
+          12.5
+        ]
+      ],
+      "notes": "Visual reorientation in simulation from RGB, 64 trials, 3,600-step horizon. The world model plans in a learned 64-D latent. Not protocol-matched with the state-based results.",
+      "mobile": {
+        "width": 1080,
+        "height": 900,
+        "aspect": "6:5",
+        "duration_s": 3.8,
+        "frames": 114,
+        "video": "static/charts/rgb_m.mp4",
+        "poster": "static/charts/rgb_m.jpg"
+      }
+    },
+    {
+      "name": "scaling",
+      "width": 1600,
+      "height": 900,
+      "aspect": "16:9",
+      "duration_s": 3.9,
+      "frames": 117,
+      "video": "static/charts/scaling.mp4",
+      "poster": "static/charts/scaling.jpg",
+      "columns": [
+        "Autonomous play (h)",
+        "50-step rotation MAE (°)"
+      ],
+      "rows": [
+        [
+          0.54,
+          34.96
+        ],
+        [
+          1.03,
+          33.13
+        ],
+        [
+          2.05,
+          30.34
+        ],
+        [
+          3.3,
+          29.1
+        ],
+        [
+          5.11,
+          28.4
+        ]
+      ],
+      "decimals": [
+        2,
+        2
+      ],
+      "unit": "Hours of real-robot autonomous play, world-model rotation error in degrees",
+      "notes": "Held-out evaluation and model fixed; only the amount of real-robot autonomous play changes. Persistence baseline (predicting no motion): 38.60°. 34.96° to 28.40° is an 18.8% reduction.",
+      "mobile": {
+        "width": 1080,
+        "height": 1160,
+        "aspect": "27:29",
+        "duration_s": 3.9,
+        "frames": 117,
+        "video": "static/charts/scaling_m.mp4",
+        "poster": "static/charts/scaling_m.jpg"
+      }
+    },
+    {
+      "name": "play_diversity",
+      "width": 1600,
+      "height": 460,
+      "aspect": "80:23",
+      "duration_s": 3.2,
+      "frames": 96,
+      "video": "static/charts/play_diversity.mp4",
+      "poster": "static/charts/play_diversity.jpg",
+      "columns": [
+        "Play policy",
+        "Rotation speed (°/s)",
+        "SO(3) coverage (%)",
+        "Transition coverage (%)",
+        "Held-out command error"
+      ],
+      "rows": [
+        [
+          "Diffusion",
+          124.9,
+          98.8,
+          84.2,
+          0.181
+        ],
+        [
+          "Deterministic",
+          57.8,
+          87.6,
+          55.4,
+          0.192
+        ]
+      ],
+      "decimals": [
+        null,
+        1,
+        1,
+        1,
+        3
+      ],
+      "unit": "Measured on the closed-loop data each play policy collects",
+      "notes": "Deterministic vs diffusion transformer play policy (paper table III). Speed and coverage come from the closed-loop data each policy collects; held-out command error is nearly equal.",
+      "mobile": {
+        "width": 1080,
+        "height": 940,
+        "aspect": "54:47",
+        "duration_s": 3.2,
+        "frames": 96,
+        "video": "static/charts/play_diversity_m.mp4",
+        "poster": "static/charts/play_diversity_m.jpg"
+      }
+    },
+    {
+      "name": "latency",
+      "width": 1600,
+      "height": 620,
+      "aspect": "80:31",
+      "duration_s": 4.2,
+      "frames": 126,
+      "video": "static/charts/latency.mp4",
+      "poster": "static/charts/latency.jpg",
+      "columns": [
+        "Stage",
+        "Median (ms)",
+        "p95 (ms)"
+      ],
+      "rows": [
+        [
+          "Cube tracking, per camera frame",
+          19.4,
+          29.4
+        ],
+        [
+          "Play policy, 1,024 proposal chunks",
+          60.5,
+          64.3
+        ],
+        [
+          "World model, 1,024 × 25-step rollouts",
+          44.2,
+          50.3
+        ],
+        [
+          "MPC scoring and selection",
+          23.4,
+          26.4
+        ],
+        [
+          "Replan, end to end",
+          133.6,
+          141.1
+        ]
+      ],
+      "decimals": [
+        null,
+        1,
+        1
+      ],
+      "unit": "Milliseconds on hardware, median and 95th percentile",
+      "notes": "One RTX 5090 over a local network. 'Other' (5.5 ms) is the end-to-end median minus the three stage medians. Planning overlaps execution, so the closed loop runs at 15 to 18 Hz.",
+      "mobile": {
+        "width": 1080,
+        "height": 800,
+        "aspect": "27:20",
+        "duration_s": 4.2,
+        "frames": 126,
+        "video": "static/charts/latency_m.mp4",
+        "poster": "static/charts/latency_m.jpg"
+      }
+    }
+  ],
+  "wm_rot_error": {
+    "video": "static/charts/wm_rot_error.mp4",
+    "poster": "static/charts/wm_rot_error.jpg",
+    "width": 1200,
+    "height": 640,
+    "frames": 31,
+    "fps": 15,
+    "t_ahead_s": [
+      0.0,
+      0.07,
+      0.13,
+      0.2,
+      0.27,
+      0.33,
+      0.4,
+      0.47,
+      0.53,
+      0.6,
+      0.67,
+      0.73,
+      0.8,
+      0.87,
+      0.93,
+      1.0,
+      1.07,
+      1.13,
+      1.2,
+      1.27,
+      1.33,
+      1.4,
+      1.47,
+      1.53,
+      1.6,
+      1.67,
+      1.73,
+      1.8,
+      1.87,
+      1.93,
+      2.0
+    ],
+    "err_deg": [
+      0.0,
+      1.9,
+      4.1,
+      4.9,
+      4.7,
+      4.2,
+      6.1,
+      2.3,
+      6.1,
+      9.4,
+      10.6,
+      13.0,
+      13.7,
+      14.0,
+      16.1,
+      14.0,
+      18.0,
+      18.8,
+      9.9,
+      28.1,
+      23.8,
+      33.7,
+      38.2,
+      37.3,
+      38.7,
+      41.2,
+      39.8,
+      35.0,
+      33.3,
+      33.2,
+      28.5
+    ],
+    "notes": "World-model rotation error vs prediction horizon on one held-out clip, read from the source clip's frame titles. Frame k shows the curve up to k/15 s ahead."
+  }
+}
