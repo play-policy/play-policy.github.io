@@ -21,8 +21,8 @@ index.html                 the page
 static/css/style.css       page styles (design tokens at the top)
 static/css/planner-toy.css styles for the in-browser planning toy
 static/js/main.js          page behavior: lazy autoplay, lightbox, chart videos, pipeline
-                           scrollytelling, world-model scrubber, MPC stepper, hardware hotspots,
-                           toggles, BibTeX copy (the eight hardware runs are plain autoplay clips)
+                           scrollytelling, world-model scrubber, MPC stepper, toggles, BibTeX copy
+                           (the eight hardware runs are plain autoplay clips)
 static/js/planner-toy.js   the in-browser planning toy (mounted on <div data-planner-toy>)
 static/videos/             web encodes of the clips from the slide deck
 static/posters/            poster frames (and thumbs/ for the gallery)

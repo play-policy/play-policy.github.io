@@ -1429,116 +1429,6 @@
     setPhase(0, false);
   }
 
-  /* ------------------------------------------------------------ hardware hotspots */
-
-  function initHotspots() {
-    var photo = $('#hwPhoto');
-    if (!photo) return;
-    var tip = $('#hsTip');
-    var spots = $$('.hs', photo);
-    var keys = $$('#hwKey li');
-    var names = {};
-    keys.forEach(function (li) { names[li.dataset.hs] = $('.hw-name', li).textContent; });
-    var pinned = null;
-
-    function spotFor(id) { return spots.filter(function (s) { return s.dataset.hs === id; })[0]; }
-
-    function place(spot) {
-      var pw = photo.clientWidth;
-      var x = spot.offsetLeft;
-      var y = spot.offsetTop;
-      tip.style.left = '0px';
-      tip.style.top = '0px';
-      tip.hidden = false;
-      var tw = tip.offsetWidth;
-      var th = tip.offsetHeight;
-      var gap = 24;
-      var left = Math.max(8, Math.min(pw - tw - 8, x - tw / 2));
-      var top = y - th - gap;
-      if (top < 8) top = y + gap;
-      tip.style.left = left + 'px';
-      tip.style.top = top + 'px';
-    }
-
-    function show(id) {
-      var spot = spotFor(id);
-      if (!spot) return;
-      tip.innerHTML = '';
-      var strong = document.createElement('strong');
-      strong.textContent = names[id] || id;
-      tip.appendChild(strong);
-      if (spot.dataset.clip) {
-        var hint = document.createElement('span');
-        hint.textContent = 'Click to watch';
-        tip.appendChild(hint);
-      }
-      place(spot);
-      spots.forEach(function (s) { s.classList.toggle('is-active', s === spot); });
-      keys.forEach(function (li) { li.classList.toggle('is-active', li.dataset.hs === id); });
-    }
-
-    function hide() {
-      if (pinned) {
-        show(pinned);
-        return;
-      }
-      tip.hidden = true;
-      spots.forEach(function (s) { s.classList.remove('is-active'); });
-      keys.forEach(function (li) { li.classList.remove('is-active'); });
-    }
-
-    function openClip(id, opener) {
-      var spot = spotFor(id);
-      if (!spot || !spot.dataset.clip) return;
-      expandVideo(spot.dataset.clip, {
-        poster: spot.dataset.poster,
-        caption: spot.dataset.caption || names[id],
-        label: spot.dataset.caption || names[id],
-        opener: opener || spot,
-        userAction: true
-      });
-    }
-
-    spots.forEach(function (s) {
-      var id = s.dataset.hs;
-      s.addEventListener('mouseenter', function () { show(id); });
-      s.addEventListener('mouseleave', hide);
-      s.addEventListener('focus', function () { show(id); });
-      s.addEventListener('blur', hide);
-      s.addEventListener('click', function (e) {
-        e.stopPropagation();
-        if (s.dataset.clip) {
-          pinned = null;
-          hide();
-          openClip(id, s);
-          return;
-        }
-        pinned = pinned === id ? null : id;
-        if (pinned) show(id);
-        else hide();
-      });
-    });
-
-    keys.forEach(function (li) {
-      li.addEventListener('mouseenter', function () { show(li.dataset.hs); });
-      li.addEventListener('mouseleave', hide);
-      var watch = $('.hw-watch', li);
-      if (watch) watch.addEventListener('click', function () { openClip(li.dataset.hs, watch); });
-    });
-
-    document.addEventListener('click', function (e) {
-      if (pinned && !photo.contains(e.target)) {
-        pinned = null;
-        hide();
-      }
-    });
-
-    window.addEventListener('resize', function () {
-      var a = spots.filter(function (s) { return s.classList.contains('is-active'); })[0];
-      if (a && !tip.hidden) place(a);
-    });
-  }
-
   /* ------------------------------------------------------------ state / RGB toggle */
 
   function initPixToggle() {
@@ -1630,7 +1520,6 @@
   initPipeline();
   var wm = initWM();
   initMPC();
-  initHotspots();
   initPixToggle();
   initBib();
   initImages();
