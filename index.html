@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="static/css/planner-toy.css">
 </head>
 <body>
-<a class="skip" href="#runs">Skip to content</a>
+<a class="skip" href="#method">Skip to content</a>
 
 <header class="nav" id="nav">
   <div class="nav-progress" aria-hidden="true"><span id="navProgress"></span></div>
@@ -34,11 +34,11 @@
       <span class="nav-burger-bars" aria-hidden="true"></span><span class="nav-burger-label" id="navBurgerLabel">Menu</span>
     </button>
     <nav class="nav-links" id="navLinks" aria-label="Sections">
-      <a href="#runs" data-spy="runs">Runs</a>
       <a href="#method" data-spy="method">Method</a>
       <a href="#planning" data-spy="planning">Planning</a>
       <a href="#results" data-spy="results">Results</a>
       <a href="#analysis" data-spy="analysis">Analysis</a>
+      <a href="#runs" data-spy="runs">Runs</a>
       <a href="#faq" data-spy="faq">FAQ</a>
       <a href="#bibtex" data-spy="bibtex">BibTeX</a>
     </nav>
@@ -51,7 +51,7 @@
 <section class="hero" aria-labelledby="title">
   <div class="wrap">
     <h1 id="title">Dexterity from Supervised Play</h1>
-    <p class="hero-lede">Learning dexterity from minutes of goal-agnostic human play. No task demonstrations, no&nbsp;sim2real.</p>
+    <p class="hero-lede">Learning dexterity from 15 minutes of goal-free play, with no task demonstrations or&nbsp;sim2real.</p>
 
     <p class="authors">
       <a href="https://bottle101.github.io/" target="_blank" rel="noopener">Botao&nbsp;He</a>,
@@ -64,7 +64,7 @@
     <!-- TODO: add affiliation superscripts per author once the mapping is confirmed. -->
     <p class="affil">Amazon Frontier AI &amp; Robotics (FAR) &middot; University of Maryland</p>
 
-    <p class="soon">Paper, arXiv and code are coming soon. <a href="#bibtex">BibTeX</a></p>
+    <p class="soon">Paper, arXiv and code are coming soon; <a href="#bibtex">BibTeX</a>.</p>
     <!-- TODO: when the links are public, replace the line above with buttons, for example:
     <div class="links">
       <a class="btn" href="PAPER_PDF_URL"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm4 18H6V4h7v5h5zM8 12h8v2H8zm0 4h8v2H8z"/></svg>Paper</a>
@@ -95,79 +95,11 @@
   </div>
 </section>
 
-<!-- ======================================================= HARDWARE RUNS (dark band) -->
-<section class="section band-dark" id="runs" aria-labelledby="runs-h">
-  <div class="wrap">
-    <!-- <h2 id="runs-h">Eight reorientations on the real hand</h2>
-    <p class="measure lede">Each run starts between 97&deg; and 162&deg; from the goal and ends within 0.4&nbsp;rad (22.9&deg;) of it. We picked these to show complete reorientations. Over the full hardware evaluation, DSP gets within 0.4&nbsp;rad of the goal in 68.6% of trials.</p> -->
-
-    <div class="runs-grid">
-      <figure class="run">
-        <div class="vframe" style="--ar: 16 / 9">
-          <span class="badge" aria-hidden="true">2&times;</span>
-          <video data-src="static/videos/real_04.mp4" poster="static/posters/real_04.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="Run 1: 118&deg; to 10&deg; from the goal in 36 s, shown at 2&times;." aria-label="Hardware run 1: the cube goes from 118 degrees to 10 degrees from the goal in 36 seconds. Playing at twice real time."></video>
-        </div>
-        <figcaption><span class="run-name">Run 1</span>118&deg; &rarr; 10&deg; in 36&nbsp;s</figcaption>
-      </figure>
-      <figure class="run">
-        <div class="vframe" style="--ar: 16 / 9">
-          <span class="badge" aria-hidden="true">2&times;</span>
-          <video data-src="static/videos/real_03.mp4" poster="static/posters/real_03.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="Run 2: 136&deg; to 20&deg; from the goal in 53 s, shown at 2&times;." aria-label="Hardware run 2: the cube goes from 136 degrees to 20 degrees from the goal in 53 seconds. Playing at twice real time."></video>
-        </div>
-        <figcaption><span class="run-name">Run 2</span>136&deg; &rarr; 20&deg; in 53&nbsp;s</figcaption>
-      </figure>
-      <figure class="run">
-        <div class="vframe" style="--ar: 16 / 9">
-          <span class="badge" aria-hidden="true">2&times;</span>
-          <video data-src="static/videos/real_06.mp4" poster="static/posters/real_06.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="Run 3: 139&deg; to 20&deg; from the goal in 26 s, shown at 2&times;." aria-label="Hardware run 3: the cube goes from 139 degrees to 20 degrees from the goal in 26 seconds. Playing at twice real time."></video>
-        </div>
-        <figcaption><span class="run-name">Run 3</span>139&deg; &rarr; 20&deg; in 26&nbsp;s</figcaption>
-      </figure>
-      <figure class="run">
-        <div class="vframe" style="--ar: 16 / 9">
-          <span class="badge" aria-hidden="true">2&times;</span>
-          <video data-src="static/videos/real_05.mp4" poster="static/posters/real_05.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="Run 4: 97&deg; to 22&deg; from the goal in 25 s, shown at 2&times;." aria-label="Hardware run 4: the cube goes from 97 degrees to 22 degrees from the goal in 25 seconds. Playing at twice real time."></video>
-        </div>
-        <figcaption><span class="run-name">Run 4</span>97&deg; &rarr; 22&deg; in 25&nbsp;s</figcaption>
-      </figure>
-      <figure class="run">
-        <div class="vframe" style="--ar: 16 / 9">
-          <span class="badge" aria-hidden="true">2&times;</span>
-          <video data-src="static/videos/real_08.mp4" poster="static/posters/real_08.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="Run 5: 162&deg; to 21&deg; from the goal in 48 s, shown at 2&times;." aria-label="Hardware run 5: the cube goes from 162 degrees to 21 degrees from the goal in 48 seconds. Playing at twice real time."></video>
-        </div>
-        <figcaption><span class="run-name">Run 5</span>162&deg; &rarr; 21&deg; in 48&nbsp;s</figcaption>
-      </figure>
-      <figure class="run">
-        <div class="vframe" style="--ar: 16 / 9">
-          <span class="badge" aria-hidden="true">2&times;</span>
-          <video data-src="static/videos/real_02.mp4" poster="static/posters/real_02.jpg" data-rate="2" data-t0="7.5" muted playsinline preload="none" data-caption="Run 6: 129&deg; to 22&deg; from the goal in 36 s, shown at 2&times;." aria-label="Hardware run 6: the cube goes from 129 degrees to 22 degrees from the goal in 36 seconds. Playing at twice real time."></video>
-        </div>
-        <figcaption><span class="run-name">Run 6</span>129&deg; &rarr; 22&deg; in 36&nbsp;s<span class="run-flag">starts after the cube is placed in the hand</span></figcaption>
-      </figure>
-      <figure class="run">
-        <div class="vframe" style="--ar: 16 / 9">
-          <span class="badge" aria-hidden="true">2&times;</span>
-          <video data-src="static/videos/real_07.mp4" poster="static/posters/real_07.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="Run 7: 141&deg; to 17&deg; from the goal in 18 s, shown at 2&times;." aria-label="Hardware run 7: the cube goes from 141 degrees to 17 degrees from the goal in 18 seconds. Playing at twice real time."></video>
-        </div>
-        <figcaption><span class="run-name">Run 7</span>141&deg; &rarr; 17&deg; in 18&nbsp;s</figcaption>
-      </figure>
-      <figure class="run">
-        <div class="vframe" style="--ar: 16 / 9">
-          <span class="badge" aria-hidden="true">2&times;</span>
-          <video data-src="static/videos/real_01.mp4" poster="static/posters/real_01.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="Run 8: 155&deg; to 22&deg; from the goal in 56 s, shown at 2&times;." aria-label="Hardware run 8: the cube goes from 155 degrees to 22 degrees from the goal in 56 seconds. Playing at twice real time."></video>
-        </div>
-        <figcaption><span class="run-name">Run 8</span>155&deg; &rarr; 22&deg; in 56&nbsp;s<span class="run-flag">partly sped up in the source</span></figcaption>
-      </figure>
-    </div>
-    <p class="caption caption-dark">All eight clips play at 2&times;. The panel on the right of each clip plots the angle to the goal over time and traces the cube's path through orientation space.</p>
-  </div>
-</section>
-
 <!-- ======================================================= METHOD -->
 <section class="section section-method" id="method" aria-labelledby="method-h">
   <div class="wrap">
     <h2 id="method-h">The five stages of DSP</h2>
-    <p class="measure lede">Stages 1 to 4 make up the full system. Stage 5 is an optional speed-up.</p>
+    <p class="measure lede">Stages 1 to 4 form DSP; stage 5 optionally distills it into a faster policy.</p>
 
     <div class="method-grid">
       <div class="method-fig">
@@ -186,8 +118,7 @@
         <article class="stage" id="stage-1" data-stage="1" style="--stage: var(--s1)">
           <div class="stage-crop" aria-hidden="true"></div>
           <h3><span class="stage-mark" aria-hidden="true">1</span>Fifteen minutes of human play</h3>
-          <p>An operator wearing a Manus glove drives the Sharpa hand and plays with a tagged cube for about 15 minutes. There is no task and no reward. The operator keeps the cube moving without dropping it.</p>
-          <p>We train a diffusion-transformer play policy on these recordings with behavior cloning. Given the recent observations, it samples a chunk of future joint commands. Choices about keeping contact and switching between grasps are already in the demonstrations, so nobody has to write safe play down as rules.</p>
+          <p>Fifteen minutes of goal-free glove teleoperation train a diffusion play policy to produce 22-joint motion chunks.</p>
           <dl class="spec">
             <div><dt>data</dt><dd>~15 min goal-free teleoperation</dd></div>
             <div><dt>policy</dt><dd>diffusion transformer, behavior cloning</dd></div>
@@ -201,32 +132,20 @@
         <article class="stage" id="stage-2" data-stage="2" style="--stage: var(--s2)">
           <div class="stage-crop" aria-hidden="true"></div>
           <h3><span class="stage-mark" aria-hidden="true">2</span>Autonomous play on the robot</h3>
-          <p>Next we run the play policy on the robot with nobody at the glove. It keeps turning and regrasping the cube, and every step is logged as a transition. Because no person is needed, the amount of data is limited by robot time, and collection could run on several robots at once.</p>
-          <p>Our scaling study uses between 0.54 and 5.11 hours of this autonomous play.</p>
+          <p>The play policy runs autonomously for unlimited data collection.</p>
           <dl class="spec">
             <div><dt>logged</dt><dd>(o<sub>t</sub>, a<sub>t</sub>, o<sub>t+1</sub>) transitions</dd></div>
             <div><dt>scaling study</dt><dd>0.54 to 5.11 h</dd></div>
           </dl>
-          <div class="eqrow sync-pair" data-sync>
-            <figure class="eqcell">
-              <div class="vframe" style="--ar: 16 / 9">
-                <video data-src="static/videos/hero_human_play.mp4" poster="static/posters/hero_human_play.jpg" data-manual data-t0="8" muted playsinline preload="none" data-caption="Human at the glove." aria-label="A person at the glove plays with the cube through the robot hand."></video>
-              </div>
-              <figcaption>Human at the glove</figcaption>
-            </figure>
-            <figure class="eqcell">
-              <div class="vframe" style="--ar: 16 / 9">
-                <video data-src="static/videos/auto_play.mp4" poster="static/posters/auto_play.jpg" data-manual muted playsinline preload="none" data-caption="The play policy running on its own." aria-label="The play policy turns the cube by itself, with no operator."></video>
-              </div>
-              <figcaption>Play policy on its own</figcaption>
-            </figure>
+          <div class="vframe" style="--ar: 16 / 9">
+            <video data-src="static/videos/auto_play.mp4" poster="static/posters/auto_play.jpg" muted loop playsinline preload="none" data-caption="The play policy running on its own." aria-label="The play policy turns the cube by itself, with no operator."></video>
           </div>
         </article>
 
         <article class="stage" id="stage-3" data-stage="3" style="--stage: var(--s3)">
           <div class="stage-crop" aria-hidden="true"></div>
           <h3><span class="stage-mark" aria-hidden="true">3</span>A world model trained on play data</h3>
-          <p>From the play data we train an action-conditioned world model. Given the last C observations and a candidate action chunk, it predicts the next K observations of the cube. We train it with Diffusion Forcing, which gives every timestep its own noise level. The model conditions on a clean history and denoises the future causally, so it can roll a prediction forward step by step under whatever action chunk the planner wants to test.</p>
+          <p>A Diffusion Forcing world model predicts future cube poses from recent observations and each candidate action chunk.</p>
           <dl class="spec">
             <div><dt>input</dt><dd>last C observations + action chunk</dd></div>
             <div><dt>output</dt><dd>next K cube poses</dd></div>
@@ -259,15 +178,14 @@
               </label>
               <output class="wm-readout" id="wmReadout" for="wmRange">+0.00 s ahead</output>
             </div>
-            <p class="caption">The camera view is on top. Below it are the tracked cube in green with the model's prediction in blue, and the rotation error of that prediction, both at the horizon set by the slider.</p>
+            <p class="caption">Use the slider to compare tracked and predicted cube poses and see rotation error across the prediction horizon.</p>
           </div>
         </article>
 
         <article class="stage stage-text" id="stage-4" data-stage="4" style="--stage: var(--s4)">
           <div class="stage-crop" aria-hidden="true"></div>
           <h3><span class="stage-mark" aria-hidden="true">4</span>Planning with play proposals</h3>
-          <p>To reach a goal, we sample 1,024 action chunks from the play policy and roll each one through the world model. A chunk's score is the closest its predicted trajectory gets to the goal orientation. The robot executes the first part of the best chunk, observes the result and plans again.</p>
-          <p>The goal appears only in this score. The play policy and the world model never see it, which is why the same two models serve any goal without retraining. <a href="#planning">One replan is shown step by step below.</a></p>
+          <p>At each step, DSP predicts 1,024 play-policy proposals, executes the one that gets closest to the goal, and replans; <a href="#planning">see one replan below</a>.</p>
           <dl class="spec">
             <div><dt>proposals</dt><dd>N = 1,024 per replan</dd></div>
             <div><dt>horizon</dt><dd>50 steps predicted, 25 executed (sim)</dd></div>
@@ -277,8 +195,7 @@
         <article class="stage stage-text" id="stage-5" data-stage="5" style="--stage: var(--s5)">
           <div class="stage-crop" aria-hidden="true"></div>
           <h3><span class="stage-mark" aria-hidden="true">5</span>Optional policy distillation</h3>
-          <p>Every replan rolls all 1,024 proposals through the world model. To avoid that cost at run time, we also run the planner inside the world model, starting from recorded states with sampled goals, and keep the action prefix it chooses. Training on these labels with behavior cloning gives a goal-conditioned policy without any robot time or physics engine.</p>
-          <p>The distilled policy is several times faster than a full MPC replan. In simulation it keeps over 90% of the planner's success at 0.8&nbsp;rad and gives up more at tighter thresholds.</p>
+          <p>DSP can distill model-based planning into a 21.8&nbsp;ms goal-conditioned policy that retains over 90% of MPC success at 0.8&nbsp;rad.</p>
           <ol class="flowline" aria-label="Distillation pipeline">
             <li><span class="num">54K</span> recorded states &times; <span class="num">24</span> goals</li>
             <li>MPC inside the world model</li>
@@ -356,7 +273,7 @@
         </figure>
       </div>
 
-      <p class="mpc-text" id="mpcText" aria-live="polite">The play policy samples 1,024 action chunks from the current state. None of them is aimed at the goal.</p>
+      <p class="mpc-text" id="mpcText" aria-live="polite">The play policy samples 1,024 goal-agnostic action chunks from the current state.</p>
     </div>
 
     <div class="toy-block">
@@ -372,24 +289,9 @@
   <div class="wrap">
     <h2 id="results-h">How DSP compares</h2>
 
-    <div class="result" id="results-real">
-      <h3>Success rate on the real hand</h3>
-      <div class="measure">
-        <p>A random walk in joint space never reaches the goal, and a random walk in cube orientation at the play policy's speed rarely does. The play policy alone gets within 0.6&nbsp;rad of the goal in 38.3% of trials. Because the orientation random walk turns the cube just as fast, that gap points to the structure of the learned contacts and regrasps.</p>
-        <p>Planning on top of play raises success at 0.6&nbsp;rad to 90.0%. At every threshold, the hardware result stays within 4.1 points of DSP in simulation.</p>
-      </div>
-      <figure class="chart chart-full" data-chart="real_vs_sim">
-        <div class="chart-frame">
-          <video class="chart-video" data-src="static/charts/real_vs_sim.mp4" poster="static/charts/real_vs_sim.jpg" muted playsinline preload="none" aria-label="Bar chart of hardware success rates at 0.4, 0.6 and 0.8 radians for joint random walk, cube random walk, play policy and DSP, with ticks for DSP in simulation."></video>
-        </div>
-        <div class="chart-table" hidden></div>
-        <figcaption>Success on hardware at three goal thresholds. Ticks mark DSP's result in simulation.</figcaption>
-      </figure>
-    </div>
-
     <div class="result" id="results-skills">
-      <h3>Skills the planner selects from play</h3>
-      <p class="measure">We never demonstrated these skills as tasks. They are motions from the play repertoire that the planner picks because their predicted outcome moves the cube toward the goal.</p>
+      <h3>Emerged atomic dexterous skills from play</h3>
+      <p class="measure">We see this as one form of dexterity.</p>
       <div class="skills">
         <figure class="skill">
           <div class="vframe" style="--ar: 4 / 3"><video data-src="static/videos/skill_yaw_tip.mp4" poster="static/posters/skill_yaw_tip.jpg" muted loop playsinline preload="none" data-caption="Yaw rotation driven by the thumb tip." aria-label="Yaw rotation driven by the thumb tip."></video></div>
@@ -420,45 +322,46 @@
 
     <div class="result" id="results-sim">
       <h3>Simulation: imitation and RL baselines</h3>
-      <div class="split split-media">
-        <div class="split-text">
-          <p>Simulation lets us run baselines that are impractical on hardware, over 128 seeded trials with start and goal more than 90&deg; apart. At 0.6&nbsp;rad, DSP succeeds in 91.4% of trials. Hindsight BC, trained on the same 701K transitions with relabeled goals, reaches 53.9%. The play data holds useful motion, but relabeling alone does not turn it into goal-directed control.</p>
-          <p>PPO given the same 701K frames does not learn the task, and it needs 344M frames to reach 86.7%. With unlimited simulator frames, PPO reaches 96.9% at 0.6&nbsp;rad and converges more finely than DSP.</p>
-        </div>
+      <div class="sim-visual-pair">
         <figure class="sim-clip">
           <div class="vframe is-light" style="--ar: 4 / 3">
             <video data-src="static/videos/sim_reorient.mp4" poster="static/posters/sim_reorient.jpg" muted loop playsinline preload="none" data-caption="A simulated trial with the goal and error panel." aria-label="Simulated hand reorienting a cube toward a goal, with a panel showing the angle to the goal over time."></video>
           </div>
-          <figcaption>A simulated trial with the same goal and error panel as on hardware.</figcaption>
+        </figure>
+        <figure class="chart chart-full" data-chart="sim_baselines">
+          <div class="chart-frame">
+            <video class="chart-video" data-src="static/charts/sim_baselines.mp4" poster="static/charts/sim_baselines.jpg" muted playsinline preload="none" aria-label="Success rates in simulation at 0.4, 0.6 and 0.8 radians for DSP, the distilled policy, hindsight BC, the play policy, goal-conditioned BC and PPO with matched frames."></video>
+          </div>
         </figure>
       </div>
-      <figure class="chart chart-full" data-chart="sim_baselines">
-        <div class="chart-frame">
-          <video class="chart-video" data-src="static/charts/sim_baselines.mp4" poster="static/charts/sim_baselines.jpg" muted playsinline preload="none" aria-label="Success rates in simulation at 0.4, 0.6 and 0.8 radians for DSP, the distilled policy, hindsight BC, the play policy, goal-conditioned BC and PPO with matched frames."></video>
-        </div>
-        <div class="chart-table" hidden></div>
-        <figcaption>Simulated reorientation, 128 seeded trials per method. The distilled policy is stage 5.</figcaption>
-      </figure>
       <figure class="chart chart-full" data-chart="sim_efficiency">
         <div class="chart-frame">
           <video class="chart-video" data-src="static/charts/sim_efficiency.mp4" poster="static/charts/sim_efficiency.jpg" muted playsinline preload="none" aria-label="Success at 0.6 radians against interaction frames on a log scale. DSP reaches 91.4 percent at 701 thousand frames; PPO needs 344 million frames for 86.7 percent."></video>
         </div>
-        <div class="chart-table" hidden></div>
-        <figcaption>Success at 0.6&nbsp;rad against interaction frames, log scale.</figcaption>
+      </figure>
+    </div>
+
+    <div class="result" id="results-real">
+      <h3>Success rate on the real hand</h3>
+      <!-- <div class="measure">
+        <p>Planning raises hardware success at 0.6&nbsp;rad from 38.3% for the play policy alone to 90.0%, within 4.1 points of simulation at every threshold.</p>
+      </div> -->
+      <figure class="chart chart-full" data-chart="real_vs_sim">
+        <div class="chart-frame">
+          <video class="chart-video" data-src="static/charts/real_vs_sim.mp4" poster="static/charts/real_vs_sim.jpg" muted playsinline preload="none" aria-label="Bar chart of hardware success rates at 0.4, 0.6 and 0.8 radians for joint random walk, cube random walk, play policy and DSP, with ticks for DSP in simulation."></video>
+        </div>
       </figure>
     </div>
 
     <div class="result" id="results-pusht">
       <h3>Push-T: planar pushing from a 10k-frame teleoperation budget</h3>
       <div class="measure">
-        <p>Push-T asks a round pusher to move a T-shaped block onto a target pose. With the same data budget for every method, DSP succeeds in 98% of trials at 0.90 mask overlap, against 74% for hindsight BC, the strongest policy baseline. The gap widens at the stricter 0.95 threshold, and an RL policy trained on the same data does not learn the task.</p>
+        <p>With the same 10K-frame budget, DSP reaches 98% success at 0.90 overlap versus 74% for hindsight BC.</p>
       </div>
       <figure class="chart chart-full" data-chart="pusht">
         <div class="chart-frame">
           <video class="chart-video" data-src="static/charts/pusht.mp4" poster="static/charts/pusht.jpg" muted playsinline preload="none" aria-label="Push-T success rates at 0.90 and 0.95 mask overlap for DSP, hindsight BC, behavior cloning, goal-conditioned BC and RL with matched data."></video>
         </div>
-        <div class="chart-table" hidden></div>
-        <figcaption>Push-T success at two overlap thresholds, every method on the same data budget.</figcaption>
       </figure>
       <div class="pusht-strip">
         <figure>
@@ -482,34 +385,25 @@
 
     <div class="result" id="results-pixels">
       <h3>Planning from pixels</h3>
-      <div class="split split-media split-even">
-        <div class="split-text">
-          <p>We replace the tracked cube pose with camera images in simulation. The play policy sees RGB, and the world model scores proposals in a learned 64-dimensional latent space. At 0.6&nbsp;rad, planning raises success from 53.1% for the RGB play policy alone to 78.1%. This experiment uses 64 trials and a 3,600-step horizon, so its numbers should not be compared directly with the state-based results.</p>
-        </div>
-        <div class="pix">
-          <div class="seg" role="group" aria-label="World model input" id="pixToggle">
-            <button type="button" data-view="state" aria-pressed="true">Object state</button>
-            <button type="button" data-view="rgb" aria-pressed="false">RGB pixels</button>
-          </div>
-          <figure class="pix-view" data-view="state">
-            <div class="pix-labels" aria-hidden="true"><span>Ground truth</span><span>World-model prediction (gray: ground truth)</span></div>
-            <div class="vframe is-light" style="--ar: 2 / 1"><video data-src="static/videos/wm_state_pred.mp4" poster="static/posters/wm_state_pred.jpg" muted loop playsinline preload="none" data-caption="State world model: tracked pose and prediction." aria-label="State world model: tracked cube pose and predicted cube pose side by side."></video></div>
-            <figcaption>From object pose (7-D) and hand state (22-D), the model predicts future object pose.</figcaption>
-          </figure>
-          <figure class="pix-view" data-view="rgb" hidden>
-            <div class="pix-labels" aria-hidden="true"><span>Ground truth</span><span>World-model prediction</span></div>
-            <div class="vframe" style="--ar: 2 / 1"><video data-src="static/videos/wm_rgb_pred.mp4" poster="static/posters/wm_rgb_pred.jpg" muted loop playsinline preload="none" data-caption="Pixel world model: ground truth and prediction." aria-label="Pixel world model: ground-truth frames on the left and predicted frames on the right."></video></div>
-            <figcaption>From an RGB image and hand state (22-D), the model predicts in a learned latent space. Its prediction is shown as an image next to the ground truth over about 3 seconds.</figcaption>
-          </figure>
-        </div>
+      <div class="pix pix-comparison">
+        <figure class="pix-view">
+          <h4 class="pix-title">Object state</h4>
+          <div class="pix-labels" aria-hidden="true"><span>Ground truth</span><span>Prediction · gray = truth</span></div>
+          <div class="vframe is-light" style="--ar: 2 / 1"><video data-src="static/videos/wm_state_pred.mp4" poster="static/posters/wm_state_pred.jpg" muted loop playsinline preload="none" data-caption="State world model: tracked pose and prediction." aria-label="State world model: tracked cube pose and predicted cube pose side by side."></video></div>
+          <figcaption>Object pose and hand state predict future object pose.</figcaption>
+        </figure>
+        <figure class="pix-view">
+          <h4 class="pix-title">RGB pixels</h4>
+          <div class="pix-labels" aria-hidden="true"><span>Ground truth</span><span>Prediction</span></div>
+          <div class="vframe" style="--ar: 2 / 1"><video data-src="static/videos/wm_rgb_pred.mp4" poster="static/posters/wm_rgb_pred.jpg" muted loop playsinline preload="none" data-caption="Pixel world model: ground truth and prediction." aria-label="Pixel world model: ground-truth frames on the left and predicted frames on the right."></video></div>
+          <figcaption>RGB and hand state predict future frames.</figcaption>
+        </figure>
       </div>
-      <figure class="chart chart-full" data-chart="rgb">
+      <!-- <figure class="chart chart-full" data-chart="rgb">
         <div class="chart-frame">
           <video class="chart-video" data-src="static/charts/rgb.mp4" poster="static/charts/rgb.jpg" muted playsinline preload="none" aria-label="Success rates from RGB input for the play policy alone and with world-model planning at three thresholds."></video>
         </div>
-        <div class="chart-table" hidden></div>
-        <figcaption>Reorientation from RGB in simulation, 64 trials, with and without planning.</figcaption>
-      </figure>
+      </figure> -->
     </div>
 
   </div>
@@ -524,15 +418,12 @@
       <h3>World-model error falls as autonomous play grows</h3>
       <div class="split split-chart">
         <div class="split-text">
-          <p>We keep the model and the held-out set fixed and vary only the amount of autonomous play. Going from 0.54 to 5.11 hours lowers the 50-step rotation error by 18.8%.</p>
-          <p>Most of that gain arrives in the first two hours, and the error is still falling at five. The final model sits 26.4% below a baseline that assumes the cube does not move.</p>
+          <p>Increasing autonomous play from 0.54 to 5.11 hours lowers 50-step rotation error by 18.8%, ending 26.4% below a static baseline.</p>
         </div>
         <figure class="chart" data-chart="scaling">
           <div class="chart-frame">
             <video class="chart-video" data-src="static/charts/scaling.mp4" poster="static/charts/scaling.jpg" muted playsinline preload="none" aria-label="Line chart: 50-step rotation error falls from 34.96 degrees at 0.54 hours of autonomous play to 28.40 degrees at 5.11 hours."></video>
           </div>
-          <div class="chart-table" hidden></div>
-          <figcaption>Held-out 50-step rotation error against hours of autonomous play, log scale.</figcaption>
         </figure>
       </div>
     </div>
@@ -540,14 +431,12 @@
     <div class="result">
       <h3>A diffusion play policy covers more transitions</h3>
       <div class="measure">
-        <p>We compared a deterministic transformer and a diffusion transformer as play policies. They imitate the operator about equally well on held-out commands (0.181 vs 0.192 command error), yet in closed loop the diffusion policy covers 84.2% of transitions where the deterministic one covers 55.4%. The deterministic policy reaches many of the same orientations through a narrower set of motions, which looks like mode averaging. Wider transition coverage gives the world model more varied actions to learn from and leaves the planner more ways to approach a goal.</p>
+        <p>With similar imitation error, the diffusion policy covers 84.2% of transitions versus 55.4% for the deterministic policy.</p>
       </div>
       <figure class="chart chart-full" data-chart="play_diversity">
         <div class="chart-frame">
           <video class="chart-video" data-src="static/charts/play_diversity.mp4" poster="static/charts/play_diversity.jpg" muted playsinline preload="none" aria-label="Comparison of deterministic and diffusion play policies on rotation speed, SO(3) coverage and transition coverage."></video>
         </div>
-        <div class="chart-table" hidden></div>
-        <figcaption>Closed-loop statistics of two play policies with similar imitation error.</figcaption>
       </figure>
     </div>
 
@@ -558,15 +447,80 @@
           <div class="chart-frame">
             <video class="chart-video" data-src="static/charts/latency.mp4" poster="static/charts/latency.jpg" muted playsinline preload="none" aria-label="Timing of one replan: sampling proposals, world-model rollout and scoring, next to camera tracking and the hand executing the current prefix."></video>
           </div>
-          <div class="chart-table" hidden></div>
-          <figcaption>Median times on the real system. Stage colors match the method diagram.</figcaption>
         </figure>
         <div class="split-text">
-          <p>On one RTX 5090, a full replan takes 133.6&nbsp;ms at the median. Most of it goes to sampling the proposals (60.5&nbsp;ms) and rolling them out in the world model (44.2&nbsp;ms). Cube tracking keeps up with the 30&nbsp;fps camera.</p>
-          <p>The hand executes the current action prefix while the next plan is computed, so the closed loop runs at 15 to 18&nbsp;Hz.</p>
+          <p>One replan takes 133.6&nbsp;ms on an RTX 5090 while overlapping execution keeps control at 15 to 18&nbsp;Hz.</p>
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ======================================================= HARDWARE RUNS (dark band) -->
+<section class="section band-dark" id="runs" aria-labelledby="runs-h">
+  <div class="wrap">
+    <!-- <h2 id="runs-h">Eight reorientations on the real hand</h2>
+    <p class="measure lede">Each run starts between 97&deg; and 162&deg; from the goal and ends within 0.4&nbsp;rad (22.9&deg;) of it. We picked these to show complete reorientations. Over the full hardware evaluation, DSP gets within 0.4&nbsp;rad of the goal in 68.6% of trials.</p> -->
+
+    <div class="runs-grid">
+      <figure class="run">
+        <div class="vframe" style="--ar: 16 / 9">
+          <span class="badge" aria-hidden="true">2&times;</span>
+          <video data-src="static/videos/real_04.mp4" poster="static/posters/real_04.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="Run 1: 118&deg; to 10&deg; from the goal in 36 s, shown at 2&times;." aria-label="Hardware run 1: the cube goes from 118 degrees to 10 degrees from the goal in 36 seconds. Playing at twice real time."></video>
+        </div>
+        <figcaption><span class="run-name">Run 1</span>118&deg; &rarr; 10&deg; in 36&nbsp;s</figcaption>
+      </figure>
+      <figure class="run">
+        <div class="vframe" style="--ar: 16 / 9">
+          <span class="badge" aria-hidden="true">2&times;</span>
+          <video data-src="static/videos/real_03.mp4" poster="static/posters/real_03.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="Run 2: 136&deg; to 20&deg; from the goal in 53 s, shown at 2&times;." aria-label="Hardware run 2: the cube goes from 136 degrees to 20 degrees from the goal in 53 seconds. Playing at twice real time."></video>
+        </div>
+        <figcaption><span class="run-name">Run 2</span>136&deg; &rarr; 20&deg; in 53&nbsp;s</figcaption>
+      </figure>
+      <figure class="run">
+        <div class="vframe" style="--ar: 16 / 9">
+          <span class="badge" aria-hidden="true">2&times;</span>
+          <video data-src="static/videos/real_06.mp4" poster="static/posters/real_06.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="Run 3: 139&deg; to 20&deg; from the goal in 26 s, shown at 2&times;." aria-label="Hardware run 3: the cube goes from 139 degrees to 20 degrees from the goal in 26 seconds. Playing at twice real time."></video>
+        </div>
+        <figcaption><span class="run-name">Run 3</span>139&deg; &rarr; 20&deg; in 26&nbsp;s</figcaption>
+      </figure>
+      <figure class="run">
+        <div class="vframe" style="--ar: 16 / 9">
+          <span class="badge" aria-hidden="true">2&times;</span>
+          <video data-src="static/videos/real_05.mp4" poster="static/posters/real_05.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="Run 4: 97&deg; to 22&deg; from the goal in 25 s, shown at 2&times;." aria-label="Hardware run 4: the cube goes from 97 degrees to 22 degrees from the goal in 25 seconds. Playing at twice real time."></video>
+        </div>
+        <figcaption><span class="run-name">Run 4</span>97&deg; &rarr; 22&deg; in 25&nbsp;s</figcaption>
+      </figure>
+      <figure class="run">
+        <div class="vframe" style="--ar: 16 / 9">
+          <span class="badge" aria-hidden="true">2&times;</span>
+          <video data-src="static/videos/real_08.mp4" poster="static/posters/real_08.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="Run 5: 162&deg; to 21&deg; from the goal in 48 s, shown at 2&times;." aria-label="Hardware run 5: the cube goes from 162 degrees to 21 degrees from the goal in 48 seconds. Playing at twice real time."></video>
+        </div>
+        <figcaption><span class="run-name">Run 5</span>162&deg; &rarr; 21&deg; in 48&nbsp;s</figcaption>
+      </figure>
+      <figure class="run">
+        <div class="vframe" style="--ar: 16 / 9">
+          <span class="badge" aria-hidden="true">2&times;</span>
+          <video data-src="static/videos/real_02.mp4" poster="static/posters/real_02.jpg" data-rate="2" data-t0="7.5" muted playsinline preload="none" data-caption="Run 6: 129&deg; to 22&deg; from the goal in 36 s, shown at 2&times;." aria-label="Hardware run 6: the cube goes from 129 degrees to 22 degrees from the goal in 36 seconds. Playing at twice real time."></video>
+        </div>
+        <figcaption><span class="run-name">Run 6</span>129&deg; &rarr; 22&deg; in 36&nbsp;s<span class="run-flag">starts after the cube is placed in the hand</span></figcaption>
+      </figure>
+      <figure class="run">
+        <div class="vframe" style="--ar: 16 / 9">
+          <span class="badge" aria-hidden="true">2&times;</span>
+          <video data-src="static/videos/real_07.mp4" poster="static/posters/real_07.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="Run 7: 141&deg; to 17&deg; from the goal in 18 s, shown at 2&times;." aria-label="Hardware run 7: the cube goes from 141 degrees to 17 degrees from the goal in 18 seconds. Playing at twice real time."></video>
+        </div>
+        <figcaption><span class="run-name">Run 7</span>141&deg; &rarr; 17&deg; in 18&nbsp;s</figcaption>
+      </figure>
+      <figure class="run">
+        <div class="vframe" style="--ar: 16 / 9">
+          <span class="badge" aria-hidden="true">2&times;</span>
+          <video data-src="static/videos/real_01.mp4" poster="static/posters/real_01.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="Run 8: 155&deg; to 22&deg; from the goal in 56 s, shown at 2&times;." aria-label="Hardware run 8: the cube goes from 155 degrees to 22 degrees from the goal in 56 seconds. Playing at twice real time."></video>
+        </div>
+        <figcaption><span class="run-name">Run 8</span>155&deg; &rarr; 22&deg; in 56&nbsp;s<span class="run-flag">partly sped up in the source</span></figcaption>
+      </figure>
+    </div>
+    <p class="caption caption-dark">All clips play at 2&times;, with goal error and orientation trajectory shown on the right.</p>
   </div>
 </section>
 
@@ -578,47 +532,42 @@
 
       <details>
         <summary>What counts as play here?</summary>
-        <p>Goal-free interaction that keeps the object moving without dropping it, such as rolling the cube or passing it between fingers. The operator has no target orientation and no score to chase.</p>
-        <p>Our working hypothesis is that play can be modeled as a goal-agnostic policy that sees only the robot's recent observations, never a goal. Good play is hard to write down as rules, but under this view it can be learned with ordinary behavior cloning, and the habits that keep the hardware safe come along with the data.</p>
+        <p>Play is goal-free interaction that keeps the object moving, letting behavior cloning learn useful motions without rewards or targets.</p>
       </details>
 
       <details>
         <summary>Why not demonstrate the task directly?</summary>
-        <p>Demonstrating play is much easier than demonstrating a dexterous solution. Turning a cube to an exact orientation through a glove is slow and error-prone, while any operator can play with it for 15 minutes.</p>
-        <p>We tried the direct route in simulation with a goal-conditioned BC policy trained on 15 minutes of goal-reaching teleoperation, the same human time as our play data. It reaches 34.4% at 0.6&nbsp;rad, against 91.4% for DSP.</p>
+        <p>Play is easier to demonstrate, and with the same 15 minutes of human time DSP reaches 91.4% at 0.6&nbsp;rad versus 34.4% for goal-conditioned BC.</p>
       </details>
 
       <details>
         <summary>Why not reinforcement learning?</summary>
-        <p>In our simulated benchmark, PPO with DSP's budget of 701K frames does not learn the task. It needs about 490 times more frames (344M) to reach 86.7% at 0.6&nbsp;rad, close to DSP's 91.4%.</p>
-        <p>We did not run RL on hardware, where it would need millions of interaction frames and its early exploration could damage the hand. When frames are free, PPO does converge more precisely (96.9% at 0.6&nbsp;rad with unlimited frames). DSP is meant for robots and tasks that have no such simulator.</p>
+        <p>PPO needs 344M simulator frames to reach 86.7% at 0.6&nbsp;rad, while DSP reaches 91.4% with 701K frames and avoids unsafe hardware exploration.</p>
       </details>
 
       <details>
         <summary>Why use the play policy to propose actions?</summary>
-        <p>Its motions are already feasible contact sequences, so the planner chooses among good motions instead of searching for them. Random motion is also a poor way to explore this hardware. Executed directly, a random walk in cube orientation at the play policy's angular speed reaches 11.4% at 0.6&nbsp;rad, where the play policy reaches 38.3%.</p>
+        <p>The play policy supplies feasible contact motions, outperforming an equally fast orientation random walk at 0.6&nbsp;rad (38.3% versus 11.4%).</p>
       </details>
 
       <details>
         <summary>Does DSP use simulation?</summary>
-        <p>Not for the hardware results. The play policy and the world model for the real hand are trained only on human play and the robot's own autonomous play, and the planner runs on top of them.</p>
-        <p>We use Isaac Lab separately as a benchmark. It lets us run baselines like PPO and repeat 128 seeded trials per method.</p>
+        <p>Not on hardware; Isaac Lab is used only to evaluate baselines in repeatable simulation.</p>
       </details>
 
       <details>
         <summary>What are the limitations?</summary>
-        <p>We show two tasks: in-hand cube reorientation, from state and from pixels, and Push-T. The world model learns from what the play policy does, so its predictions are only trustworthy near the behavior that play produces. If play never produces a kind of motion, the planner has no way to propose it.</p>
-        <p>Planning costs compute at every step, and the distilled policy that removes the cost gives up precision at tight thresholds. When a simulator can supply unlimited frames, PPO still converges more finely. The pixel experiment runs in simulation with its own trial protocol. Play also still starts with a person, who has to provide those 15 minutes at the glove.</p>
+        <p>DSP is limited by its play repertoire, requires per-step planning compute and initial human play, and has only been shown on cube reorientation and Push-T.</p>
       </details>
 
       <details>
         <summary>Could a large pretrained behavior model replace the human play?</summary>
-        <p>Possibly. The play policy is a separate module, so a broader pretrained behavior model could supply the initial repertoire of interactions, with autonomous play grounding their consequences on a particular robot. We have not tried this yet, and we think it is a promising direction.</p>
+        <p>Possibly: a pretrained behavior model could replace initial human play before autonomous data collection, but we have not tested it.</p>
       </details>
 
       <details>
         <summary>Will the code and data be released?</summary>
-        <p>Yes. We plan to release the code, data and training details needed to reproduce the results, and we will link them at the top of this page.</p>
+        <p>Yes; code, data and training details will be linked at the top of this page.</p>
       </details>
 
     </div>
@@ -631,7 +580,6 @@
     <h2 id="bibtex-h">BibTeX</h2>
     <div class="bib">
       <button type="button" class="ctl bib-copy" id="bibCopy">Copy</button>
-      <!-- TODO: switch to the arXiv entry (eprint, archivePrefix, primaryClass) once the paper is public. -->
       <pre id="bibText"><span class="bl">@misc{he2026dsp,</span><span class="bl">  title  = {Dexterity from Supervised Play},</span><span class="bl">  author = {He, Botao and Dou, Yiming and Aloimonos, Yiannis and</span><span class="bl">            Malik, Jitendra and Sharma, Akash and Liu, Ruoshi},</span><span class="bl">  year   = {2026}</span><span class="bl">}</span></pre>
     </div>
   </div>

@@ -547,87 +547,7 @@
     }, { passive: true });
   }
 
-  /* ------------------------------------------------------------ chart data and tables */
-
-  var CHART_FALLBACK = {
-    sim_baselines: {
-      columns: ['Method', 'SR@0.4 rad (%)', 'SR@0.6 rad (%)', 'SR@0.8 rad (%)'],
-      rows: [
-        ['DSP (ours)', 72.7, 91.4, 96.1],
-        ['Distilled policy (ours)', 40.6, 72.7, 86.7],
-        ['Hindsight BC', 25.8, 53.9, 71.9],
-        ['Play policy', 15.6, 36.7, 54.7],
-        ['Goal-conditioned BC', 21.9, 34.4, 50.0],
-        ['PPO, same 701K frames', 0.0, 0.0, 1.6]
-      ],
-      decimals: [null, 1, 1, 1]
-    },
-    sim_efficiency: {
-      columns: ['Method', 'Interaction frames', 'SR@0.6 rad (%)'],
-      rows: [
-        ['DSP', 701000, 91.4],
-        ['Hindsight BC', 701000, 53.9],
-        ['PPO, same frames', 701000, 0.0],
-        ['PPO, 344M frames', 344000000, 86.7],
-        ['PPO, unlimited frames', null, 96.9]
-      ],
-      decimals: [null, 0, 1]
-    },
-    real_vs_sim: {
-      columns: ['Controller', 'SR@0.4 rad (%)', 'SR@0.6 rad (%)', 'SR@0.8 rad (%)'],
-      rows: [
-        ['DSP on hardware', 68.6, 90.0, 97.1],
-        ['Play policy', 20.9, 38.3, 54.1],
-        ['Cube random walk, SO(3)', 6.3, 11.4, 17.5],
-        ['Joint random walk', 0.0, 0.0, 0.0],
-        ['DSP in simulation (reference)', 72.7, 91.4, 96.1]
-      ],
-      decimals: [null, 1, 1, 1]
-    },
-    pusht: {
-      columns: ['Controller', 'SR@0.90 overlap (%)', 'SR@0.95 overlap (%)', 'Mean coverage'],
-      rows: [
-        ['DSP (ours)', 98, 74, 0.953],
-        ['Hindsight BC', 74, 36, 0.764],
-        ['Behavior cloning', 64, 28, 0.751],
-        ['Goal-conditioned BC', 60, 34, 0.733],
-        ['RL, matched data', 0, 0, 0.155]
-      ],
-      decimals: [null, 0, 0, 3]
-    },
-    rgb: {
-      columns: ['Controller', 'SR@0.4 rad (%)', 'SR@0.6 rad (%)', 'SR@0.8 rad (%)'],
-      rows: [
-        ['Play policy alone (RGB)', 34.4, 53.1, 76.6],
-        ['DSP (RGB)', 56.2, 78.1, 89.1]
-      ],
-      decimals: [null, 1, 1, 1]
-    },
-    scaling: {
-      columns: ['Autonomous play (h)', '50-step rotation MAE (°)'],
-      rows: [[0.54, 34.96], [1.03, 33.13], [2.05, 30.34], [3.30, 29.10], [5.11, 28.40]],
-      decimals: [2, 2]
-    },
-    play_diversity: {
-      columns: ['Play policy', 'Rotation speed (°/s)', 'SO(3) coverage (%)', 'Transition coverage (%)', 'Held-out command error'],
-      rows: [
-        ['Diffusion', 124.9, 98.8, 84.2, 0.181],
-        ['Deterministic', 57.8, 87.6, 55.4, 0.192]
-      ],
-      decimals: [null, 1, 1, 1, 3]
-    },
-    latency: {
-      columns: ['Stage', 'Median (ms)', 'p95 (ms)'],
-      rows: [
-        ['Cube tracking, per camera frame', 19.4, 29.4],
-        ['Play policy, 1,024 proposal chunks', 60.5, 64.3],
-        ['World model, 1,024 × 25-step rollouts', 44.2, 50.3],
-        ['Scoring and selection', 23.4, 26.4],
-        ['Replan, end to end', 133.6, 141.1]
-      ],
-      decimals: [null, 1, 1]
-    }
-  };
+  /* ------------------------------------------------------------ chart videos */
 
   // Desktop and phone (portrait) render sizes; charts.json overrides these when it loads.
   var CHART_DIMS = {
@@ -640,137 +560,6 @@
     play_diversity: [1600, 460, 1080, 940],
     latency: [1600, 620, 1080, 800]
   };
-
-  function decimals(v) {
-    if (typeof v !== 'number' || !isFinite(v) || Number.isInteger(v)) return 0;
-    var s = String(v);
-    var i = s.indexOf('.');
-    return i < 0 ? 0 : s.length - i - 1;
-  }
-
-  function formatCell(v, dec, rowLabel) {
-    if (v === null || v === undefined || v === '') {
-      return /unlimited/i.test(String(rowLabel)) ? 'unlimited' : 'not reported';
-    }
-    if (typeof v !== 'number') return String(v);
-    if (Number.isInteger(v) && Math.abs(v) >= 1e6) return (v / 1e6).toLocaleString('en-US', { maximumFractionDigits: 1 }) + 'M';
-    if (Number.isInteger(v) && Math.abs(v) >= 1e4) return (v / 1e3).toLocaleString('en-US', { maximumFractionDigits: 1 }) + 'K';
-    return v.toFixed(dec);
-  }
-
-  var SHORT_HEADERS = {
-    'interaction frames': 'Frames',
-    'mean coverage': 'Coverage',
-    'autonomous play (h)': 'Hours',
-    '50-step rotation mae (°)': 'Error (°)',
-    '50-step rotation mae (deg)': 'Error (°)',
-    'rotation speed (°/s)': '°/s',
-    'rotation speed (deg/s)': '°/s',
-    'so(3) coverage (%)': 'SO(3) %',
-    'transition coverage (%)': 'Trans. %',
-    'held-out command error': 'Cmd. err.',
-    'median (ms)': 'Median',
-    'p95 (ms)': 'p95'
-  };
-
-  function shortHeader(h) {
-    var s = String(h);
-    var k = s.toLowerCase();
-    if (SHORT_HEADERS[k]) return SHORT_HEADERS[k];
-    var m = s.match(/^(?:SR@|Success at\s+)([\d.]+)\s*(rad)?/i);
-    if (m) return m[1] + (m[2] ? ' rad' : '');
-    m = s.match(/^Overlap\s*(≥\s*[\d.]+)/i);
-    if (m) return m[1];
-    var t = s.replace(/\s*\([^)]*\)\s*$/, '').replace(/\s*\([^)]*\)\s*$/, '');
-    return t || s;
-  }
-
-  function normalizeTable(entry) {
-    if (!entry || !Array.isArray(entry.rows) || !entry.rows.length) return null;
-    var rows = entry.rows;
-    var columns = entry.columns;
-    if (rows[0] && typeof rows[0] === 'object' && !Array.isArray(rows[0])) {
-      columns = columns || Object.keys(rows[0]);
-      rows = rows.map(function (r) { return columns.map(function (c) { return r[c]; }); });
-    }
-    if (!Array.isArray(columns)) {
-      columns = rows[0].map(String);
-      rows = rows.slice(1);
-    }
-    if (!rows.length || rows.length > 30) return null;
-    return {
-      columns: columns,
-      rows: rows,
-      decimals: Array.isArray(entry.decimals) ? entry.decimals : null,
-      notes: typeof entry.notes === 'string' ? entry.notes : ''
-    };
-  }
-
-  function buildTable(tbl, label) {
-    var table = document.createElement('table');
-    if (label) {
-      var cap = document.createElement('caption');
-      cap.className = 'sr-only';
-      cap.textContent = label;
-      table.appendChild(cap);
-    }
-    var ncol = tbl.columns.length;
-    var dec = [];
-    var numeric = [];
-    for (var c = 0; c < ncol; c++) {
-      var d = 0;
-      var allNum = true;
-      tbl.rows.forEach(function (r) {
-        var v = r[c];
-        if (typeof v === 'number') d = Math.max(d, decimals(v));
-        else if (v !== null && v !== undefined) allNum = false;
-      });
-      if (tbl.decimals && typeof tbl.decimals[c] === 'number') d = tbl.decimals[c];
-      dec.push(d);
-      numeric.push(allNum);
-    }
-    var thead = document.createElement('thead');
-    var tr = document.createElement('tr');
-    tbl.columns.forEach(function (name, i) {
-      var th = document.createElement('th');
-      th.scope = 'col';
-      var full = String(name);
-      var short = shortHeader(full);
-      if (short !== full) {
-        var a = document.createElement('span');
-        a.className = 'h-full';
-        a.textContent = full;
-        var b = document.createElement('span');
-        b.className = 'h-short';
-        b.textContent = short;
-        th.appendChild(a);
-        th.appendChild(b);
-        th.title = full;
-      } else {
-        th.textContent = full;
-      }
-      if (numeric[i] && i > 0) th.className = 'num';
-      tr.appendChild(th);
-    });
-    thead.appendChild(tr);
-    table.appendChild(thead);
-    var tbody = document.createElement('tbody');
-    tbl.rows.forEach(function (r) {
-      var row = document.createElement('tr');
-      r.forEach(function (v, i) {
-        var cell = document.createElement(i === 0 ? 'th' : 'td');
-        if (i === 0) cell.scope = 'row';
-        cell.textContent = formatCell(v, dec[i], r[0]);
-        if (numeric[i] && i > 0) cell.className = 'num';
-        row.appendChild(cell);
-      });
-      tbody.appendChild(row);
-    });
-    table.appendChild(tbody);
-    return table;
-  }
-
-  /* ------------------------------------------------------------ chart videos */
 
   var REPLAY_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg>';
 
@@ -785,8 +574,6 @@
     var name = fig.dataset.chart;
     var video = $('.chart-video', fig);
     var frame = $('.chart-frame', fig);
-    var box = $('.chart-table', fig);
-    var cap = $('figcaption', fig);
     if (!video || !frame) return null;
 
     var dims = CHART_DIMS[name];
@@ -798,9 +585,6 @@
     };
     var hasPhone = !!dims;
     var current = null;
-    var tableData = CHART_FALLBACK[name] || null;
-    var built = false;
-    var capText = cap ? cap.textContent.trim() : name;
 
     // replay affordance inside the chart
     var glyph = document.createElement('span');
@@ -822,44 +606,6 @@
         replay();
       }
     });
-
-    // one quiet "Show numbers" link in the caption
-    var toggle = null;
-    if (cap && box) {
-      var tableId = 'tbl-' + name;
-      box.id = tableId;
-      toggle = document.createElement('button');
-      toggle.type = 'button';
-      toggle.className = 'chart-numbers';
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-controls', tableId);
-      toggle.textContent = 'Show numbers';
-      cap.appendChild(document.createTextNode(' '));
-      cap.appendChild(toggle);
-      if (!tableData) toggle.hidden = true;
-      toggle.addEventListener('click', function () {
-        showTable(toggle.getAttribute('aria-expanded') !== 'true');
-      });
-    }
-
-    function showTable(open) {
-      if (!box || !tableData) return;
-      if (open && !built) {
-        box.appendChild(buildTable(tableData, capText));
-        if (tableData.notes) {
-          var p = document.createElement('p');
-          p.className = 'chart-notes';
-          p.textContent = tableData.notes;
-          box.appendChild(p);
-        }
-        built = true;
-      }
-      box.hidden = !open;
-      if (toggle) {
-        toggle.setAttribute('aria-expanded', String(open));
-        toggle.textContent = open ? 'Hide numbers' : 'Show numbers';
-      }
-    }
 
     function applyVariant() {
       var want = (phoneQuery.matches && hasPhone) ? phone : base;
@@ -883,8 +629,6 @@
 
     function update(entry) {
       if (!entry) return;
-      if (!built) tableData = normalizeTable(entry) || tableData;
-      if (toggle) toggle.hidden = !tableData;
       base.wh = entryAspect(entry) || base.wh;
       if (entry.mobile && typeof entry.mobile === 'object') {
         hasPhone = true;
@@ -904,10 +648,7 @@
 
     video.addEventListener('loadedmetadata', function () { fitFrame(video); });
     video.addEventListener('error', function () {
-      if (!posterOk) {
-        frame.classList.add('is-missing');
-        showTable(true);
-      }
+      if (!posterOk) frame.classList.add('is-missing');
     });
 
     applyVariant();
@@ -1215,9 +956,9 @@
     var lasts = props.map(function (p) { return $('.mpc-last', p); });
     var bestIdx = props.findIndex(function (p) { return p.dataset.best === 'true'; });
     var TEXT = [
-      'The play policy samples 1,024 action chunks from the current state. None of them is aimed at the goal.',
-      'The world model predicts where each chunk takes the cube. All 1,024 rollouts run as one batch.',
-      'Each prediction is scored by how close it gets to the goal orientation. This is the only step that uses the goal.',
+      'The play policy samples 1,024 goal-agnostic action chunks from the current state.',
+      'The world model predicts all 1,024 outcomes in one batch.',
+      'The goal is used only to score how close each predicted trajectory gets.',
       'The robot executes the start of the best chunk, and planning begins again from the new state.'
     ];
     var phase = 0;
@@ -1429,27 +1170,6 @@
     setPhase(0, false);
   }
 
-  /* ------------------------------------------------------------ state / RGB toggle */
-
-  function initPixToggle() {
-    var group = $('#pixToggle');
-    if (!group) return;
-    var btns = $$('button', group);
-    var views = $$('.pix-view');
-    btns.forEach(function (b) {
-      b.addEventListener('click', function () {
-        btns.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
-        views.forEach(function (v) {
-          var on = v.dataset.view === b.dataset.view;
-          v.hidden = !on;
-          var vid = $('video', v);
-          if (vid && !on) vid.pause();
-          if (vid && on && reduceMotion) attachSrc(vid, 'metadata');
-        });
-      });
-    });
-  }
-
   /* ------------------------------------------------------------ BibTeX */
 
   function initBib() {
@@ -1520,7 +1240,6 @@
   initPipeline();
   var wm = initWM();
   initMPC();
-  initPixToggle();
   initBib();
   initImages();
   initToyFallback();

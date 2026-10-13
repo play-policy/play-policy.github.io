@@ -5,12 +5,12 @@
    "file": "static/videos/auto_play.mp4",
    "width": 1280,
    "height": 720,
-   "duration_s": 20.5,
+   "duration_s": 12.5,
    "fps": 30.0,
-   "frames": 615,
-   "bytes": 1078252,
+   "frames": 375,
+   "bytes": 757392,
    "poster": "static/posters/auto_play.jpg",
-   "note": "Autonomous play: the learned play policy running on the robot by itself (deck slide 9)."
+   "note": "Autonomous play: the learned play policy running on the robot by itself (deck slide 9); first 8 s removed."
   },
   {
    "name": "hero_human_play",
@@ -111,6 +111,30 @@
    "bytes": 42128,
    "poster": "static/posters/pusht_mpc.jpg",
    "note": "Push-T: play-guided MPC pushes the T onto the green target. Gray frame border cropped (492x492 at 10,10 of 512x512)."
+  },
+  {
+   "name": "pusht_plan_predict",
+   "file": "static/videos/pusht_plan_predict.mp4",
+   "width": 720,
+   "height": 720,
+   "duration_s": 4.2,
+   "fps": 30.0,
+   "frames": 126,
+   "bytes": 25602,
+   "poster": "static/posters/pusht_plan_predict.jpg",
+   "note": ""
+  },
+  {
+   "name": "pusht_plan_propose",
+   "file": "static/videos/pusht_plan_propose.mp4",
+   "width": 720,
+   "height": 720,
+   "duration_s": 4.2,
+   "fps": 30.0,
+   "frames": 126,
+   "bytes": 43924,
+   "poster": "static/posters/pusht_plan_propose.jpg",
+   "note": ""
   },
   {
    "name": "pusht_play",
@@ -443,5 +467,5 @@
    "bytes": 149140
   }
  ],
- "total_video_bytes": 37560941
+ "total_video_bytes": 37309607
 }

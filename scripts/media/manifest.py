@@ -18,7 +18,7 @@ MPC = "Cropped 360x360 at (96,70) of 512x512 (same box for all four MPC clips), 
 SKILL = "Emergent skill selected by play-guided MPC on hardware. Source tagged HLG/BT.2020 with SDR-looking 8-bit pixels; converted to BT.709 (matrix only) and cropped 1200x900 at (480,180) of 1920x1080."
 NOTES = {
     "hero_human_play": "Goal-free human play: Manus glove teleoperation of the Sharpa hand (deck slides 2 and 7).",
-    "auto_play": "Autonomous play: the learned play policy running on the robot by itself (deck slide 9).",
+    "auto_play": "Autonomous play: the learned play policy running on the robot by itself (deck slide 9); first 8 s removed.",
     "motiv_teleop": "Task-specific teleoperation rig used to collect behavior-cloning demos (deck slide 4).",
     "motiv_rl_sim": "Massively parallel RL simulation (deck slide 4; source file name says boomerang, 5x speed). First 12 s, black top band cropped.",
     "pusht_play": "Push-T: autonomous play data (state-based sim). Gray frame border cropped (492x492 at 10,10 of 512x512).",

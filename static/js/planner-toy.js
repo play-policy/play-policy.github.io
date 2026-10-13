@@ -687,6 +687,18 @@
     return Math.max(a, b, d);
   }
 
+  function rotateGoalByDrag(q, dx, dy) {
+    var drag = Math.sqrt(dx * dx + dy * dy);
+    if (drag < 1e-6) return q;
+    var ax = dy * CAM.r[0] + dx * CAM.u[0];
+    var ay = dy * CAM.r[1] + dx * CAM.u[1];
+    var az = dy * CAM.r[2] + dx * CAM.u[2];
+    var n = Math.sqrt(ax * ax + ay * ay + az * az);
+    var h = 0.5 * Math.min(drag, 80) * 0.012;
+    var s = Math.sin(h) / n;
+    return mulInto(Math.cos(h), ax * s, ay * s, az * s, q, q);
+  }
+
   var _sx = new Float64Array(8), _sy = new Float64Array(8);
 
   function drawCube(ctx, q, cx, cy, s) {
@@ -779,7 +791,7 @@
     var dataN = parseInt(root.getAttribute('data-proposals'), 10);
     var dataSpeed = parseFloat(root.getAttribute('data-speed'));
     this.n = opts.proposals || (PROPOSAL_OPTIONS.indexOf(dataN) >= 0 ? dataN : 1024);
-    this.speed = opts.speed || (SPEED_OPTIONS.indexOf(dataSpeed) >= 0 ? dataSpeed : 1);
+    this.speed = opts.speed || (SPEED_OPTIONS.indexOf(dataSpeed) >= 0 ? dataSpeed : 2);
     var seed = opts.seed == null ? randomSeed() : opts.seed;
     this.rng = mulberry32(seed ^ 0x9e3779b9);
     this.planner = new Planner(seed);
@@ -789,6 +801,14 @@
     this.trialSeed = 0;       // hidden-cube seed shared by both trials
     this.tmpA = new Float64Array(4);
     this.tmpB = new Float64Array(4);
+    this.goalPreview = new Float64Array(4);
+    this.goalHit = null;
+    this.goalDragging = false;
+    this.goalHot = false;
+    this.goalMoved = false;
+    this.goalPointerId = null;
+    this.goalLastX = 0;
+    this.goalLastY = 0;
     this.reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     this.userPaused = this.reduced;
     this.visible = false;
@@ -806,6 +826,7 @@
     this.colors = null;
     this._tick = this.tick.bind(this);
     this.build();
+    this.bindGoalInput();
     this.readColors();
     this.newGoal(true);
     this.observe();
@@ -822,7 +843,9 @@
     var view = el('div', 'ptoy__view');
     this.cubeCanvas = el('canvas', 'ptoy__cube');
     this.cubeCanvas.setAttribute('role', 'img');
-    this.cubeCanvas.setAttribute('aria-label', 'The cube as it is now, and the goal orientation');
+    this.cubeCanvas.setAttribute('aria-label', 'Current and goal cube orientations; drag the goal cube or use the arrow keys to rotate it');
+    this.cubeCanvas.setAttribute('title', 'Drag the goal cube to rotate it');
+    this.cubeCanvas.tabIndex = 0;
     view.appendChild(this.cubeCanvas);
 
     var plotWrap = el('div', 'ptoy__plotwrap');
@@ -931,10 +954,138 @@
     root.appendChild(this.resultsBox);
 
     root.appendChild(el('p', 'ptoy__note',
-      'Toy model in your browser, not the trained system. A hand-written mix of yaw rotations, flips ' +
-      'that fail half the time, small corrections and regrasps stands in for the learned play policy. The ' +
-      'commanded rotation plus a random error stands in for the learned world model, with its 50-step ' +
-      'error set to about 28°, close to the real model’s 28.4°.'));
+      'This browser toy replaces the learned policy and world model with hand-written motions and calibrated prediction error.'));
+  };
+
+  Toy.prototype.goalPoint = function (e) {
+    var rect = this.cubeCanvas.getBoundingClientRect();
+    var sx = rect.width ? (this.cubeCanvas._cssW || rect.width) / rect.width : 1;
+    var sy = rect.height ? (this.cubeCanvas._cssH || rect.height) / rect.height : 1;
+    return [(e.clientX - rect.left) * sx, (e.clientY - rect.top) * sy];
+  };
+
+  Toy.prototype.goalContains = function (x, y) {
+    var h = this.goalHit;
+    if (!h) return false;
+    var dx = x - h.x, dy = y - h.y;
+    return dx * dx + dy * dy <= h.r * h.r;
+  };
+
+  Toy.prototype.setGoalHot = function (hot) {
+    hot = !!hot;
+    if (hot === this.goalHot) return;
+    this.goalHot = hot;
+    this.cubeCanvas.classList.toggle('is-goal-hot', hot);
+    if (this.colors) this.drawCubes();
+  };
+
+  Toy.prototype.commitGoal = function (goal) {
+    this.tmpA.set(this.trial.q);
+    this.tmpB.set(goal);
+    this.trialSeed = (this.rng() * 4294967296) >>> 0;
+    this.trial.reset(this.tmpA, this.tmpB, this.trialSeed);
+    this.trial.replan(this.n, true);
+    if (this.cmpOn) {
+      this.cmp.reset(this.tmpA, this.tmpB, this.trialSeed);
+      this.cmp.replan(1, false);
+    }
+    this.ended = false;
+    this.holdLeft = 0;
+    this.xmax = 4;
+    this.fanHold = this.speed === 1 ? FAN_HOLD_MS : 0;
+    this.acc = 0;
+    this.setStatus('Goal updated, ' + Math.round(this.trial.err * R2D) + '° away.');
+    this.render();
+  };
+
+  Toy.prototype.bindGoalInput = function () {
+    var self = this, cv = this.cubeCanvas;
+    this._goalDown = function (e) {
+      if (e.button != null && e.button !== 0) return;
+      var p = self.goalPoint(e);
+      if (!self.goalContains(p[0], p[1])) return;
+      e.preventDefault();
+      self.goalPreview.set(self.trial.g);
+      self.goalDragging = true;
+      self.goalMoved = false;
+      self.goalPointerId = e.pointerId;
+      self.goalLastX = p[0];
+      self.goalLastY = p[1];
+      self.goalHot = true;
+      cv.classList.add('is-goal-hot', 'is-goal-dragging');
+      if (cv.setPointerCapture) cv.setPointerCapture(e.pointerId);
+      try { cv.focus({ preventScroll: true }); } catch (_) { cv.focus(); }
+      self.updateLoop();
+      self.drawCubes();
+    };
+    this._goalMove = function (e) {
+      var p = self.goalPoint(e);
+      if (!self.goalDragging) {
+        if (e.pointerType !== 'touch') self.setGoalHot(self.goalContains(p[0], p[1]));
+        return;
+      }
+      if (e.pointerId !== self.goalPointerId) return;
+      var dx = p[0] - self.goalLastX, dy = p[1] - self.goalLastY;
+      self.goalLastX = p[0];
+      self.goalLastY = p[1];
+      if (dx || dy) {
+        rotateGoalByDrag(self.goalPreview, dx, dy);
+        self.goalMoved = true;
+        self.drawCubes();
+      }
+    };
+    this._goalEnd = function (e) {
+      if (!self.goalDragging || e.pointerId !== self.goalPointerId) return;
+      var commit = e.type !== 'pointercancel' && self.goalMoved;
+      var p = self.goalPoint(e);
+      self.goalDragging = false;
+      self.goalPointerId = null;
+      cv.classList.remove('is-goal-dragging');
+      self.setGoalHot(e.pointerType !== 'touch' && self.goalContains(p[0], p[1]));
+      if (cv.releasePointerCapture && cv.hasPointerCapture && cv.hasPointerCapture(e.pointerId)) {
+        cv.releasePointerCapture(e.pointerId);
+      }
+      if (commit) self.commitGoal(self.goalPreview);
+      else self.drawCubes();
+      self.updateLoop();
+    };
+    this._goalLeave = function () {
+      if (!self.goalDragging) self.setGoalHot(false);
+    };
+    this._goalLost = function (e) {
+      if (!self.goalDragging || e.pointerId !== self.goalPointerId) return;
+      self.goalDragging = false;
+      self.goalMoved = false;
+      self.goalPointerId = null;
+      cv.classList.remove('is-goal-dragging');
+      self.setGoalHot(false);
+      self.drawCubes();
+      self.updateLoop();
+    };
+    this._goalFocus = function () { self.setGoalHot(true); };
+    this._goalBlur = function () { self.setGoalHot(false); };
+    this._goalKey = function (e) {
+      var dx = 0, dy = 0;
+      if (e.key === 'ArrowLeft') dx = -12;
+      else if (e.key === 'ArrowRight') dx = 12;
+      else if (e.key === 'ArrowUp') dy = -12;
+      else if (e.key === 'ArrowDown') dy = 12;
+      else return;
+      e.preventDefault();
+      self.goalPreview.set(self.trial.g);
+      rotateGoalByDrag(self.goalPreview, dx, dy);
+      self.commitGoal(self.goalPreview);
+      self.updateLoop();
+    };
+    cv.addEventListener('pointerdown', this._goalDown);
+    cv.addEventListener('pointermove', this._goalMove);
+    cv.addEventListener('pointerup', this._goalEnd);
+    cv.addEventListener('pointercancel', this._goalEnd);
+    cv.addEventListener('pointerleave', this._goalLeave);
+    cv.addEventListener('lostpointercapture', this._goalLost);
+    cv.addEventListener('focus', this._goalFocus);
+    cv.addEventListener('blur', this._goalBlur);
+    cv.addEventListener('keydown', this._goalKey);
   };
 
   Toy.prototype.readColors = function () {
@@ -1061,7 +1212,7 @@
   };
 
   Toy.prototype.updateLoop = function () {
-    var run = !this.userPaused && this.visible && this.pageVisible;
+    var run = !this.userPaused && this.visible && this.pageVisible && !this.goalDragging;
     if (run && !this.raf) {
       this.lastTs = 0;
       this.raf = window.requestAnimationFrame(this._tick);
@@ -1119,7 +1270,7 @@
       this.easeAxis(dtWall);
     }
     this.render();
-    var run = !this.userPaused && this.visible && this.pageVisible;
+    var run = !this.userPaused && this.visible && this.pageVisible && !this.goalDragging;
     this.raf = run ? window.requestAnimationFrame(this._tick) : 0;
   };
 
@@ -1203,6 +1354,18 @@
     // Cube positions use the worst-case projected radius, sqrt(3) times the half-size, so no
     // orientation reaches the canvas edge or another cube.
     var R3 = 1.7321;
+    var goal = this.goalDragging ? this.goalPreview : this.trial.g;
+    function goalHandle(x, y, r) {
+      if (!self.goalHot && !self.goalDragging) return;
+      ctx.save();
+      ctx.strokeStyle = col.accent;
+      ctx.lineWidth = self.goalDragging ? 2 : 1.5;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, 2 * Math.PI);
+      ctx.stroke();
+      ctx.restore();
+    }
     if (!this.cmpOn) {
       var m = Math.min(W, Hh * 1.15);
       var big = m * 0.19, small = m * 0.075;
@@ -1210,12 +1373,14 @@
       var cy = Hh * 0.45;
       var cx = Math.min(W * 0.4, gx - R3 * small - R3 * big - 6);
       drawCube(ctx, this.trial.q, cx, cy, big);
-      drawCube(ctx, this.trial.g, gx, gy, small);
+      drawCube(ctx, goal, gx, gy, small);
+      this.goalHit = { x: gx, y: gy, r: Math.max(24, R3 * small + 8) };
+      goalHandle(gx, gy, R3 * small + 6);
       ctx.textAlign = 'center';
       ctx.textBaseline = 'alphabetic';
       ctx.fillStyle = col.secondary;
       ctx.font = '12px ' + this.fontSans;
-      ctx.fillText('goal', gx, gy + R3 * small + 14);
+      ctx.fillText('drag goal', gx, gy + R3 * small + 14);
       caption(cx, Math.min(Hh - 26, cy + big * 1.8 + 16), 'current', this.trial.err);
     } else {
       // goal on top, play only on the left, planner on the right; sized so that the goal, the two
@@ -1224,12 +1389,14 @@
       var gS = s2 * 0.5;
       var gyy = 8 + R3 * gS;
       var ly = gyy + R3 * gS + 6 + R3 * s2;
-      drawCube(ctx, this.trial.g, W * 0.5, gyy, gS);
+      drawCube(ctx, goal, W * 0.5, gyy, gS);
+      this.goalHit = { x: W * 0.5, y: gyy, r: Math.max(24, R3 * gS + 8) };
+      goalHandle(W * 0.5, gyy, R3 * gS + 6);
       ctx.textAlign = 'left';
       ctx.textBaseline = 'middle';
       ctx.fillStyle = col.secondary;
       ctx.font = '12px ' + this.fontSans;
-      ctx.fillText('goal', W * 0.5 + R3 * gS + 6, gyy);
+      ctx.fillText('drag goal', W * 0.5 + R3 * gS + 6, gyy);
       drawCube(ctx, this.cmp.q, W * 0.26, ly, s2);
       drawCube(ctx, this.trial.q, W * 0.74, ly, s2);
       var capY = Math.min(Hh - 22, ly + R3 * s2 + 13);
@@ -1548,6 +1715,17 @@
     if (this.io) this.io.disconnect();
     if (this.ro) this.ro.disconnect();
     if (this._onResize) window.removeEventListener('resize', this._onResize);
+    if (this._goalDown) {
+      this.cubeCanvas.removeEventListener('pointerdown', this._goalDown);
+      this.cubeCanvas.removeEventListener('pointermove', this._goalMove);
+      this.cubeCanvas.removeEventListener('pointerup', this._goalEnd);
+      this.cubeCanvas.removeEventListener('pointercancel', this._goalEnd);
+      this.cubeCanvas.removeEventListener('pointerleave', this._goalLeave);
+      this.cubeCanvas.removeEventListener('lostpointercapture', this._goalLost);
+      this.cubeCanvas.removeEventListener('focus', this._goalFocus);
+      this.cubeCanvas.removeEventListener('blur', this._goalBlur);
+      this.cubeCanvas.removeEventListener('keydown', this._goalKey);
+    }
     document.removeEventListener('visibilitychange', this._onVis);
     this.root.removeAttribute('data-ptoy-mounted');
     this.root.classList.remove('ptoy--narrow');

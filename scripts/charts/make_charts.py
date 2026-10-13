@@ -518,7 +518,7 @@ def chart_wm_rot_error():
     err = E["err_deg"]
     W, H = 1200, 640
     XL, XR, YT, YB = 112, 1150, 92, 532
-    T_MAX, V_MAX = 2.07, 45
+    T_MAX, V_MAX = 2.07, 180
 
     def X(s):
         return lin(s, 0, T_MAX, XL, XR)
@@ -546,7 +546,7 @@ def chart_wm_rot_error():
 
     def draw(c, t):
         k = min(len(err) - 1, int(round(t * 15)))
-        for v in (0, 10, 20, 30, 40):
+        for v in (0, 45, 90, 135, 180):
             c.hline(XL, XR, Y(v), color=AXIS if v == 0 else HAIRLINE, width=2)
             c.text(XL - 26, Y(v), f"{v}", size=30, color=TICK, ha="right")
         c.text(40, 40, "Rotation error (°)", size=32, color=SECONDARY)

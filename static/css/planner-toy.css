@@ -57,6 +57,20 @@
   height: 250px;
   background: var(--ptoy-band);
   border-radius: 6px;
+  touch-action: pan-y;
+}
+
+.ptoy__cube.is-goal-hot {
+  cursor: grab;
+}
+
+.ptoy__cube.is-goal-dragging {
+  cursor: grabbing;
+}
+
+.ptoy__cube:focus-visible {
+  outline: 2px solid var(--ptoy-accent);
+  outline-offset: 2px;
 }
 
 .ptoy__plot {

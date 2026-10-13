@@ -54,7 +54,7 @@ FIT="$AS709,scale='min(1280,iw)':-2:flags=lanczos"
 
 echo "videos:"
 footage hero_human_play media1.mov 27 "$FIT"
-footage auto_play       media7.MOV 27 "$FIT"
+footage auto_play       media7.MOV 27 "$FIT" -ss 8
 footage motiv_teleop    media6.mp4 27 "$FIT"
 # 588x588 source with a black band on top; keep the 588x440 picture, first 12 s.
 footage motiv_rl_sim    media5.mp4 25 "$AS709,crop=588:440:0:148" -t 12

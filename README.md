@@ -26,14 +26,11 @@ static/js/main.js          page behavior: lazy autoplay, lightbox, chart videos,
 static/js/planner-toy.js   the in-browser planning toy (mounted on <div data-planner-toy>)
 static/videos/             web encodes of the clips from the slide deck
 static/posters/            poster frames (and thumbs/ for the gallery)
-static/charts/             result charts rendered as short videos, plus charts.json with the numbers
+static/charts/             result charts rendered as short videos, plus chart metadata
 static/images/             pipeline figure, setup photo, Push-T planning panels, favicon, og image
 static/media.json          per-clip metadata (size, duration, start and end angle for hardware runs)
 scripts/media/, scripts/charts/   how the videos and chart videos were produced
 ```
-
-Every chart video has a "Numbers" table built from `static/charts/charts.json`, with an inline copy of
-the same numbers in `main.js` as a fallback when the page is opened from `file://`.
 
 ## Before going public
 
