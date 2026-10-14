@@ -588,7 +588,7 @@ figcaption {
 }
 
 .soon {
-  margin: 0 0 clamp(20px, 2.6vw, 30px);
+  margin: 0 0 var(--sp-3);
   font-size: 0.9375rem;
   color: var(--ink-2);
 }
