@@ -74,12 +74,11 @@
     </div>
     -->
 
-    <div class="hero-pair">
+    <div class="hero-pair" role="group" aria-label="From goal-free hand play to goal-conditioned cube reorientation">
       <figure class="hero-cell">
         <div class="vframe" style="--ar: 16 / 9">
           <video data-src="static/videos/hero_human_play.mp4" poster="static/posters/hero_human_play.jpg" muted loop playsinline preload="none" data-caption="Goal-free human play: a person drives the hand through a Manus glove." aria-label="A person wearing a Manus glove teleoperates the robot hand, turning and regrasping a tagged cube without any goal."></video>
         </div>
-        <figcaption><span class="cap-lead">15 minutes of goal-free human play</span> A person drives the hand through a glove and keeps the cube moving.</figcaption>
       </figure>
       <div class="hero-arrow" aria-hidden="true">
         <svg viewBox="0 0 48 24"><path d="M0 11h40v2H0z"/><path d="M34 5l9 7-9 7z"/></svg>
@@ -89,8 +88,28 @@
           <span class="badge" aria-hidden="true">2&times;</span>
           <video data-src="static/videos/real_07.mp4" poster="static/posters/real_07.jpg" data-rate="2" muted loop playsinline preload="none" data-caption="DSP reorienting the cube from 141° to 17° from the goal, shown at 2×." aria-label="The robot hand turns the cube toward a requested orientation on its own. A panel shows the angle to the goal falling from 141 degrees to 17 degrees. Playing at twice real time."></video>
         </div>
-        <figcaption><span class="cap-lead">Reaching a requested orientation</span> The same hand, planning toward a goal it never saw during play.</figcaption>
       </figure>
+    </div>
+
+    <div class="hero-pusht">
+      <div class="hero-pusht-strip" role="group" aria-label="The same play-to-goal framework demonstrated on Push-T">
+        <div class="hero-pusht-step">
+          <figure>
+            <div class="vframe is-light" style="--ar: 1 / 1">
+              <video data-src="static/videos/pusht_play.mp4" poster="static/posters/pusht_play.jpg" muted loop playsinline preload="none" data-caption="Goal-free Push-T play with no target." aria-label="A blue pusher moves around a T-shaped block during goal-free Push-T play, with no target shown."></video>
+            </div>
+          </figure>
+          <p class="hero-pusht-copy">From minutes of <strong>goal-free human play</strong></p>
+        </div>
+        <div class="hero-pusht-step">
+          <figure>
+            <div class="vframe is-light" style="--ar: 1 / 1">
+              <video data-src="static/videos/pusht_mpc.mp4" poster="static/posters/pusht_mpc.jpg" muted loop playsinline preload="none" data-caption="DSP pushes the T onto a requested green target." aria-label="A blue pusher moves a T-shaped block onto a requested green target using play-guided planning."></video>
+            </div>
+          </figure>
+          <p class="hero-pusht-copy">To <strong>goal-conditioned dexterity</strong></p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -459,8 +478,7 @@
 <!-- ======================================================= HARDWARE RUNS (dark band) -->
 <section class="section band-dark" id="runs" aria-labelledby="runs-h">
   <div class="wrap">
-    <!-- <h2 id="runs-h">Eight reorientations on the real hand</h2>
-    <p class="measure lede">Each run starts between 97&deg; and 162&deg; from the goal and ends within 0.4&nbsp;rad (22.9&deg;) of it. We picked these to show complete reorientations. Over the full hardware evaluation, DSP gets within 0.4&nbsp;rad of the goal in 68.6% of trials.</p> -->
+    <h2 id="runs-h">Real-world cube reorientation demos</h2>
 
     <div class="runs-grid">
       <figure class="run">
