@@ -587,14 +587,6 @@ figcaption {
   color: var(--ink-2);
 }
 
-.soon {
-  margin: 0 0 var(--sp-3);
-  font-size: 0.9375rem;
-  color: var(--ink-2);
-}
-
-.soon a { color: var(--ink); font-weight: 500; }
-
 .links {
   display: flex;
   flex-wrap: wrap;

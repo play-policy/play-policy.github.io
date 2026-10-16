@@ -34,8 +34,6 @@ scripts/media/, scripts/charts/   how the videos and chart videos were produced
 
 ## Before going public
 
-- The hero says "Paper, arXiv and code are coming soon." The link-button markup is kept in a
-  commented-out block next to it; restore it with the real URLs (search `TODO` in `index.html`).
 - Author affiliations are listed without per-author superscripts until the mapping is confirmed.
 - The distillation speed-up is phrased as "several times faster than a full MPC replan" because the
   paper's "7x" does not match 133.6 ms / 21.8 ms (about 6x); confirm which replan the 7x refers to.
